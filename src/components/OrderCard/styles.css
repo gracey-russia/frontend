@@ -1,0 +1,28 @@
+.orderCard{
+    background-color:#edf3ff ;
+    padding: 35px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+    gap:50px;
+    width: 600px;
+    justify-content: space-between;
+}
+
+.orderCardContent{
+    display:flex;
+    flex-direction: column;
+    gap:5px;
+    align-items: flex-start;
+}
+
+.orderCardBtns{
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+    justify-content: center;
+}
+
+.orderH2{
+margin-bottom: 0px;
+}

@@ -1,0 +1,28 @@
+.applicationCard{
+    background-color:#edf3ff ;
+    padding: 35px;
+    display: flex;
+    flex-direction: row;
+    border-radius: 15px;
+    gap:50px;
+    width: 600px;
+    justify-content: space-between;
+}
+
+.applicationCardContent{
+    display:flex;
+    flex-direction: column;
+    gap:5px;
+    align-items: flex-start;
+}
+
+.applicationCardBtns{
+    display: flex;
+    flex-direction: column;
+    gap:15px;
+    justify-content: center;
+}
+
+.appH2{
+margin-bottom: 0px;
+}

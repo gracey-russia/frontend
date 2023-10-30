@@ -1,15 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { MyApp } from './app/App';
+import {BrowserRouter} from 'react-router-dom';
+import 'antd/dist/reset.css';
+import { ConfigProvider, theme } from 'antd';
+
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
+  
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <ConfigProvider theme={{
+      token: {
+        colorPrimary: '#2E418E',
+
+        // colorBgContainer: '#EDF3FF',
+      },
+    }}>
+            <MyApp />
+      </ConfigProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

@@ -1,0 +1,37 @@
+.applicationPageBackground{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.applicationPage{
+    background-color:#edf3ff ;
+    padding: 35px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    align-items: flex-start;
+    gap:15px;    
+}
+.applicationPageBtns{
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.orderPageWrapper{
+    display: flex;
+    gap:50px;
+    justify-content:  space-between;
+}
