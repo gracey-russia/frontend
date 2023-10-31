@@ -35,8 +35,8 @@ export const NursePage:React.FC = () =>{
         })
         userApi.get('nurse_info/').then((r)=>{
             setUser(r.data)
-        }).catch((r)=>{
-            if(r.status == 404){
+        }).catch((r_)=>{
+            if(r_.response.status == 404){
                 navigate('nurse_form')
             }
         }

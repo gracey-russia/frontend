@@ -23,8 +23,8 @@ export const CustomerPage:React.FC = () =>{
         
         userApi.get('customer_info/').then((r)=>{
             setUser(r.data)
-        }).catch((r)=>{
-            if(r.status == 404){
+        }).catch((r_)=>{
+            if(r_.response.status == 404){
                 navigate('customer_form')
             }
         }

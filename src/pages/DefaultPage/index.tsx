@@ -49,12 +49,13 @@ export const DefaultPage = () =>{
             }
         })
         userApi.get('user_info/').then((r)=>{
-            
             userApi.get(r.data.role+'_info/').then((r_user)=>{
                 setUser(r_user.data)
             }).catch((r_user)=>{
-                if (r_user.status == 404){
-                    navigate(user?.user.role + '/' + user?.user.role + "_form/")                } else if (r_user.response.status != 200){
+                console.log(r_user)
+                if (r_user.response.status == 404){
+                    navigate(r.data.role + '/' + r.data.role + "_form/")
+                } else if (r_user.response.status != 200){
                     message.error('Ошибка сервера!')
                 }
             })
