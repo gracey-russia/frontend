@@ -95,6 +95,7 @@ export interface VisitIE{
     order: string,
     time_start:string,
     time_end:string,
+    appelations: string[]
 }
 
 export interface VisitResponseIE{
@@ -103,4 +104,12 @@ export interface VisitResponseIE{
         visits: VisitIE[]
     }[],
     completed_visits: VisitIE[]
+}
+
+export interface AppelationIE{
+    id:string, 
+    ans:string,
+    comment: string,
+    status: string, 
+    visit: string
 }

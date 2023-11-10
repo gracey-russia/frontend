@@ -6,6 +6,8 @@ import { axios, userApi } from "../../lib/axios";
 import { ApplicationIE, CustomerInfoIE, NurseInfoIE, OrderIE, VisitIE } from "../../types";
 import './styles.css'
 
+export const RoleContext = React.createContext('customer')
+
 export const OrderPage:React.FC = () =>{
     let {order_id} = useParams()
     const [data, setData] = useState<OrderIE>()
@@ -18,7 +20,7 @@ export const OrderPage:React.FC = () =>{
     const navigate = useNavigate()
     const role  = location.pathname.split('/')[1]
 
-
+    console.log(visits)
     
     useEffect( () =>{
         axios.get('order/'+order_id+'/').then((r)=>{
@@ -31,6 +33,15 @@ export const OrderPage:React.FC = () =>{
                 }
             }
             )
+            axios.get('visit/order/'+r.data.id+'/').then((r)=>{
+                console.log(r.data)
+                setVisits(r.data)
+             }).catch((r)=>{
+                    if (r.status!= 200){
+                        message.error('Ошибка сервера!')
+                    }
+                }
+             )
             if (role == 'nurse'){
                 userApi.get('customer_info/'+r.data.client+'/').then((r)=>{
                     setCustomer(r.data)
@@ -40,15 +51,7 @@ export const OrderPage:React.FC = () =>{
                      }
                  }
                  )
-                 axios.get('visit/order/'+r.data.id+'/').then((r)=>{
-                    console.log(r.data)
-                    setVisits(r.data)
-                 }).catch((r)=>{
-                        if (r.status!= 200){
-                            message.error('Ошибка сервера!')
-                        }
-                    }
-                 )
+                
             } 
         }).catch((r)=>{
                 if (r.status != 200){
@@ -148,9 +151,15 @@ export const OrderPage:React.FC = () =>{
                                 <Space><h4 style={{margin:'0px'}}>E-mail: </h4> {customer?.user.email} </Space>
                                 <Space><h4 style={{margin:'0px'}}>Регион: </h4> {customer?.customer_info.region}</Space>
                                 <h3>Посещения</h3>
-                                {
-                                    visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
-                                }
+                                <RoleContext.Provider value={role}>
+                                    <div className="visitsWrapper">
+                                        {
+                                            visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
+                                        }
+                                    </div>
+                                </RoleContext.Provider>
+                               
+                               
                         </Space>
                         :
                         <Space direction="vertical">
@@ -161,6 +170,15 @@ export const OrderPage:React.FC = () =>{
                             <Space><h4 style={{margin:'0px'}}>Опыт работы: </h4> {nurse?.nurse_info.expirience}</Space>
                             <Space><h4 style={{margin:'0px'}}>Гражданство: </h4> {nurse?.nurse_info.citizenship}</Space>
                             <Space><h4 style={{margin:'0px'}}>Описание: </h4> {nurse?.nurse_info.description}</Space>
+                            <h3>Посещения</h3>
+                            <RoleContext.Provider value={role}>
+                                    <div className="visitsWrapper">
+                                        {
+                                            visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
+                                        }
+                                    </div>
+                            </RoleContext.Provider>
+                        
                         </Space>
                     }
                   

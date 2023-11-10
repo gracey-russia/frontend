@@ -1,11 +1,16 @@
 import './styles.css'
-import React from 'react'
+import React, { useContext } from 'react'
 import { VisitIE } from '../../types'
 import { Button, Tag } from 'antd'
 import { useNavigate } from 'react-router-dom'
+import { RoleContext } from '../../pages/OrderPage'
 
 export const VisitCard:React.FC<VisitIE> = (props) =>{
     let navigate = useNavigate()
+
+    let role = useContext(RoleContext)
+
+    
 
     return  <div className='visitCard'>
             <div className="visitCardContent">
@@ -18,7 +23,19 @@ export const VisitCard:React.FC<VisitIE> = (props) =>{
             </div>
             
             <div className="visitCardBtns">
-                <Button type='primary' onClick={()=>navigate('/nurse/visit/'+props.id)}>Подробнее</Button>
+                <Button type='primary' onClick={()=>navigate( '/'+ role + '/visit/'+props.id)}>Подробнее</Button>
+
+                {
+                    (props.completed && role == 'customer')? 
+
+                    props.appelations.length > 0? 
+                    <Button onClick={()=>navigate('/customer/appelation/'+props.appelations[props.appelations.length-1])}>Посмотреть аппеляцию</Button>
+                    :
+                    <Button onClick={()=>navigate('/customer/appelation/create/'+props.id)}>Создать аппеляцию</Button>
+                    :
+                    ''
+                }
+
             </div>
 
         </div>
