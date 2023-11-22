@@ -110,7 +110,7 @@ export const DefaultPage = () =>{
       </Drawer>
         <div className="defaultPage">
             <header className="header">
-                <div lang="ru-Ru" className="logo" onClick={()=>navigate('/')}>GRAC<span  lang="ru-Ru" style={{color:'#d3e6ff'}}>EY</span></div>
+                <div lang="ru-RU" className="logo" onClick={()=>navigate('/')}>GRAC<span  lang="ru-Ru" style={{color:'#d3e6ff'}}>EY</span></div>
                 <div className="btnsWrapper">
                     <Space><h3 style={{margin:'0px'}}>Баланс:</h3> {balance} руб.</Space>
                     <Button onClick={()=>logout()} ><LogoutOutlined /> Выйти</Button>
