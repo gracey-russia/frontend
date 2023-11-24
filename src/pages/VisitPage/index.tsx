@@ -1,6 +1,6 @@
 import { App, Button, Input, Space, Tag } from 'antd'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { axios } from '../../lib/axios'
 import { VisitIE } from '../../types'
 import './styles.css'
@@ -12,7 +12,7 @@ export const VisitPage:React.FC = () => {
     const {visit_id} = useParams()
     const [visit, setVisit] = useState<VisitIE>()
     const { message, notification, modal } = App.useApp();
-
+    let location = useLocation();
     let create_date = new Date((visit?.create_date as any) * 1000).toLocaleString()
     let completed_date = new Date((visit?.completed_date as any) * 1000).toLocaleString()
     const role  = location.pathname.split('/')[1]
