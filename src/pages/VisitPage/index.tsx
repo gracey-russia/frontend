@@ -15,7 +15,8 @@ export const VisitPage:React.FC = () => {
 
     let create_date = new Date((visit?.create_date as any) * 1000).toLocaleString()
     let completed_date = new Date((visit?.completed_date as any) * 1000).toLocaleString()
-    
+    const role  = location.pathname.split('/')[1]
+
     useEffect(()=>{
         axios.get('visit/'+visit_id + '/').then((r)=>{
             setVisit(r.data)
@@ -78,7 +79,7 @@ export const VisitPage:React.FC = () => {
                     </Space>
                     <Button onClick={()=>navigate('/nurse/order/' + visit?.order)}>Перейти к заказу </Button>
                     {
-                        visit?.completed? '': <Button onClick={()=>onCompleteClick()} type='primary'>Отметить выполненным</Button>
+                        visit?.completed? '': role == 'nurse'? '':<Button onClick={()=>onCompleteClick()} type='primary'>Отметить выполненным</Button>
                     }
                     <div className="applicationPageBtns">
                         <Button onClick={()=>navigate(-1)} type='primary'>Закрыть окно</Button>
