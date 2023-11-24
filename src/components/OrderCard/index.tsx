@@ -12,7 +12,8 @@ export const OrderCard:React.FC<OrderIE> = (props) =>{
     let location = useLocation();
     return <div className='orderCard'>
             <div className="orderCardContent">
-                <h2 className="orderH2">Заказ на сиделку</h2>    
+                <h2 className="orderH2">Заказ на сиделку</h2>  
+                <div>Тип: {props.care_type}</div>
                 <div>Адрес: {props.address}</div>
                 <div>Cиделка: {props.nurse}</div>
                 <div>Cтоимость: {props.cost}</div>
