@@ -71,7 +71,11 @@ export const CustomerPage:React.FC = () =>{
             {
                 key:'0',
                 label: 'Заявки',
-                children: applications.map((application)=><ApplicationCard  {...application}></ApplicationCard>)
+                children: <div className="orderWrapper">
+                    {
+                        applications.map((application)=><ApplicationCard  {...application}></ApplicationCard>)
+                    }
+                </div>
             }
         )
     }
@@ -119,7 +123,7 @@ export const CustomerPage:React.FC = () =>{
     return <>
     <Outlet/>
     <div className="customerPage">
-        <Button type='primary' onClick={()=>navigate('application/create')}>Создать заявку на сиделку</Button>
+        <Button type='primary' onClick={()=>navigate('application/create')}>Создать новую заявку</Button>
         <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
 
     </div>

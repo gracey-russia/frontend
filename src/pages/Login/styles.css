@@ -22,3 +22,63 @@
     width: 100%;
     text-align: center;
 }
+
+.logo{
+    font-family: Enthalpy;
+    color: #304299;
+    font-size: 40px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    user-select: none;
+    cursor: pointer;
+    padding: 50px;
+    padding-top: -50px;
+}
+
+.grace-man{
+    height: 550px;
+    position: absolute;
+    top: 200px;
+    right: 100px;
+    transform: scale(-1, 1);
+
+}
+
+.grace-girl{
+    height: 450px;
+    position: absolute;
+    right: 200px;
+    bottom: 0px;
+}
+
+.clockImg{
+    height: 200px;
+    position: absolute;
+    left: 200px;
+    top: 100px;
+}
+
+.plantImg{
+    height: 400px;
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+}
+@media screen and (max-width: 1200px) {
+    .grace-girl{
+        right: 50px
+    }
+    .grace-man{
+        left:-10px;
+    }
+  }
+
+@media screen and (max-width: 900px) {
+    .grace-girl{
+        display: none;
+    }
+    .grace-man{
+        display: none;
+    }
+
+}

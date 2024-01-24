@@ -18,7 +18,9 @@ export const NurseInfoPage:React.FC = () =>{
             email:'',
             first_name:'',
             last_name:'',
-            role: 'nurse'
+            role: 'nurse',
+            username: '',
+            telegram_username:''
         }
     })
     const [isNew, setNew] = useState(false)
@@ -60,9 +62,48 @@ export const NurseInfoPage:React.FC = () =>{
         }
     }
     
+    const onPaymentClick = () =>{
+ 
+                 var widget = new (window as any).cp.CloudPayments();
+ 
+ 
+                 widget.pay('auth', 
+                 { 
+                     publicId: 'pk_a2d44a7570fe7490cfe41bb85f660', 
+                     description: 'Подтверждение вашей карты для выплаты (' +userData.user.username + ")" ,
+                     amount: 10, 
+                     currency: 'RUB', 
+                     accountId: userData.user.username, 
+                     invoiceId: 'none', 
+                     email: userData.user.email, 
+                     skin: "mini", 
+                     autoClose: 3, 
+                     data: {
+                         isNurse : 'True'
+                     },
+                     
+                 },
+                 {
+                     onSuccess: function (options:any) {
+                         console.log(options)
+                         navigate('/')
+                         window.location.reload()
+                     },
+                     onFail: function (reason:any, options:any) { 
+                         console.log(reason)
+                         console.log(options)
+                         message.error('Оплата не прошла!')
+                     },
+                     onComplete: function (paymentResult:any, options:any) { 
+                     }
+                 }
+                 )
+             }
+
+
     return <>
     <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <h2>Данные о Вас</h2>
+        <h2>Мой профиль</h2>
         <Space>
             Имя <Input value={userData?.user.first_name} 
                     onChange={(e)=>setUser({
@@ -104,7 +145,7 @@ export const NurseInfoPage:React.FC = () =>{
                     ></InputNumber>
         </Space>
 
-        <Space>
+        {/* <Space>
             Почта <Input type="email" value={userData?.user.email} 
                     onChange={(e)=>setUser({
                         ...userData, 
@@ -116,8 +157,21 @@ export const NurseInfoPage:React.FC = () =>{
                     )} 
                     placeholder="E-mail адрес"
                     ></Input>
+        </Space> */}
+        <Space>
+            Телеграм username <Input value={userData?.user.telegram_username} 
+                    onChange={(e)=>setUser({
+                        ...userData, 
+                        user: {
+                            ...(userData.user),
+                            telegram_username:e.target.value
+                        }
+                    }
+                    )} 
+                    placeholder="@username"
+                    ></Input>
         </Space>
-
+        <h6>*Телеграм нужен для уведомлений</h6>
         <Space>
             Гражданство <Input type="email" value={userData?.nurse_info.citizenship} 
                     onChange={(e)=>setUser({
@@ -159,7 +213,8 @@ export const NurseInfoPage:React.FC = () =>{
                     placeholder="Расскажите о себе"
                     ></TextArea>
         </Space>
-
+        
+        {/* <Button onClick={()=>onPaymentClick()}>Подтвердить карту для выплат</Button> */}
        
         <Button type="primary" onClick={()=>onSave()}>Сохранить</Button>
         

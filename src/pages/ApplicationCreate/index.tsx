@@ -11,8 +11,8 @@ export const ApplicationCreate:React.FC = () =>{
     const { message, notification, modal } = App.useApp();
     const [appData, setAppData] = useState<ApplicationCreateIE>({
        care_type:'На несколько часов в день',
-       time_start: '',
-       contact_type: 'Позвоните мне'
+       time_start: 'Как можно скорее',
+       contact_type: 'WhatsApp'
     })
 
     const navigate = useNavigate()
@@ -48,16 +48,18 @@ export const ApplicationCreate:React.FC = () =>{
                         )} 
                     ></Select>
         </Space>
-
         <Space>
-            Как скоро вам нужна сиделка? <TextArea value={appData?.time_start} 
-                   onChange={(e)=>setAppData({
-                    ...appData, 
-                    time_start: e.target.value
-                    })}
-
-                    placeholder="Введите ответ"
-                    ></TextArea>
+        Когда сиделка должна приступить к работе? <Select value={appData?.time_start} 
+                        options={[
+                            {value:'Как можно скорее'},
+                            {value:'3-5 дней'},
+                            {value:'Через 5 дней и более'}
+                        ]}
+                        onChange={(e)=>setAppData({
+                            ...appData, 
+                            time_start: e
+                            })}
+                    ></Select>
         </Space>
 
         <Space>

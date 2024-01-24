@@ -3,7 +3,7 @@ import React, { useContext } from 'react'
 import { VisitIE } from '../../types'
 import { Button, Tag } from 'antd'
 import { useNavigate } from 'react-router-dom'
-import { RoleContext } from '../../pages/OrderPage'
+import { RoleContext } from '../../pages/DefaultPage'
 
 export const VisitCard:React.FC<VisitIE> = (props) =>{
     let navigate = useNavigate()

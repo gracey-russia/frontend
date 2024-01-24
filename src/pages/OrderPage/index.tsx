@@ -6,7 +6,6 @@ import { axios, userApi } from "../../lib/axios";
 import { ApplicationIE, CustomerInfoIE, NurseInfoIE, OrderIE, VisitIE } from "../../types";
 import './styles.css'
 
-export const RoleContext = React.createContext('customer')
 
 export const OrderPage:React.FC = () =>{
     let {order_id} = useParams()
@@ -42,17 +41,16 @@ export const OrderPage:React.FC = () =>{
                     }
                 }
              )
-            if (role == 'nurse'){
-                userApi.get('customer_info/'+r.data.client+'/').then((r)=>{
-                    setCustomer(r.data)
-                 }).catch((r)=>{
-                     if (r.status!= 200){
-                         message.error('Ошибка сервера!')
-                     }
+            userApi.get('customer_info/'+r.data.client+'/').then((r)=>{
+                setCustomer(r.data)
+             }).catch((r)=>{
+                 if (r.status!= 200){
+                     message.error('Ошибка сервера!')
                  }
-                 )
+             }
+             )
                 
-            } 
+            
         }).catch((r)=>{
                 if (r.status != 200){
                     message.error('Ошибка сервера!')
@@ -62,12 +60,56 @@ export const OrderPage:React.FC = () =>{
     }, [setData])
 
     const onPaymentClick = () =>{
+       let cost = 0
 
         axios.get('order/accept/' + data?.id + '/').then((r)=>{
             if (r.status == 200){
-                message.success('Заказ оплачен!')
-                navigate('/')
-                window.location.reload()
+                var widget = new (window as any).cp.CloudPayments();
+
+
+                widget.pay('auth', 
+                { 
+                    publicId: 'pk_a2d44a7570fe7490cfe41bb85f660', 
+                    description: 'Оплата заказа id:' + data?.id,
+                    amount: r.data.cost, 
+                    currency: 'RUB', 
+                    accountId: data?.client, 
+                    invoiceId: data?.id, 
+                    email: customer?.user.email, 
+                    skin: "mini", 
+                    autoClose: 3, 
+                    data: {
+                        isNurse : 'False'
+                    },
+                    escrow: { 
+                        startAccumulation: true, 
+                        escrowType: 1,
+                    }, 
+                    payer: { 
+                        firstName: customer?.user.first_name,
+                        lastName:  customer?.user.last_name,
+                        middleName: 'middlename',
+                        address: data?.address,
+                        city: customer?.customer_info.region,
+                        country: 'RU',
+                        phone: data?.client,
+                    }
+                },
+                {
+                    onSuccess: function (options:any) {
+                        console.log(options)
+                        navigate('/')
+                        window.location.reload()
+                    },
+                    onFail: function (reason:any, options:any) { 
+                        console.log(reason)
+                        console.log(options)
+                        message.error('Оплата не прошла!')
+                    },
+                    onComplete: function (paymentResult:any, options:any) { 
+                    }
+                }
+                )
             }
         }).catch((r)=>{
             if (r.response.status == 405){
@@ -76,6 +118,9 @@ export const OrderPage:React.FC = () =>{
                 message.error('Ошибка сервера!')
             }
         })
+
+        
+       
     }
 
 
@@ -108,7 +153,8 @@ export const OrderPage:React.FC = () =>{
     }
 
 
-    return <div className="applicationPageBackground">
+    return <>
+    <div className="applicationPageBackground">
         <div className="applicationPage">
             <h2>Заказ на сиделку</h2>
             <Space><h4 style={{margin:'0px'}}>ID заказа: </h4> {data?.id}</Space>
@@ -131,6 +177,8 @@ export const OrderPage:React.FC = () =>{
                     <Space><h4 style={{margin:'0px'}}>Тип ухода: </h4> {data?.care_type}</Space>
                     <Space><h4 style={{margin:'0px'}}>Адрес: </h4> {data?.address}</Space>
                     <Space><h4 style={{margin:'0px'}}>Стоимость посещения: </h4> {data?.cost} рублей</Space>
+                    <Space><h4 style={{margin:'0px'}}>Стоимость за неделю: </h4> {data?.cost_per_week} рублей</Space>
+
                     <Space><h4 style={{margin:'0px'}}>Комментарий: </h4> {data?.comment}</Space>
                     {
                         data?.days == undefined? '':<h3>Дни посещений</h3>
@@ -150,14 +198,16 @@ export const OrderPage:React.FC = () =>{
                                 <Space><h4 style={{margin:'0px'}}>Телефон: </h4> {data?.client}</Space>
                                 <Space><h4 style={{margin:'0px'}}>E-mail: </h4> {customer?.user.email} </Space>
                                 <Space><h4 style={{margin:'0px'}}>Регион: </h4> {customer?.customer_info.region}</Space>
-                                <h3>Посещения</h3>
-                                <RoleContext.Provider value={role}>
-                                    <div className="visitsWrapper">
-                                        {
-                                            visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
-                                        }
-                                    </div>
-                                </RoleContext.Provider>
+                                {
+                                    data?.care_type == 'C проживанием'? "": <>
+                                        <h3>Посещения</h3>
+                                        <div className="visitsWrapper">
+                                            {
+                                                visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
+                                            }
+                                        </div>
+                                    </>
+                                }
                                
                                
                         </Space>
@@ -170,14 +220,17 @@ export const OrderPage:React.FC = () =>{
                             <Space><h4 style={{margin:'0px'}}>Опыт работы: </h4> {nurse?.nurse_info.expirience}</Space>
                             <Space><h4 style={{margin:'0px'}}>Гражданство: </h4> {nurse?.nurse_info.citizenship}</Space>
                             <Space><h4 style={{margin:'0px'}}>Описание: </h4> {nurse?.nurse_info.description}</Space>
-                            <h3>Посещения</h3>
-                            <RoleContext.Provider value={role}>
+                            {
+                                data?.care_type == 'C проживанием'? "": <>
+                                    <h3>Посещения</h3>
                                     <div className="visitsWrapper">
                                         {
                                             visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
                                         }
                                     </div>
-                            </RoleContext.Provider>
+                                </>
+                            }
+                            
                         
                         </Space>
                     }
@@ -201,4 +254,5 @@ export const OrderPage:React.FC = () =>{
             </div>
         </div>
     </div>
+    </>
 }

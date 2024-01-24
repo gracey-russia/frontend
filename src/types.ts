@@ -3,7 +3,8 @@ export interface User{
     first_name:string, 
     last_name:string,
     jwt_token: string,
-    linked_card?:string
+    linked_card?:string,
+    token:string,
 }
 
 export interface CustomerInfoIE{
@@ -16,7 +17,7 @@ export interface CustomerInfoIE{
         last_name:string,
         role: string,
         linked_card?:string
-
+        telegram_username:string
     }
 }
 
@@ -27,6 +28,8 @@ export interface NurseInfoIE{
                 role:string,
                 email:string,
                 linked_card?:string
+                username:string,
+                telegram_username:string
         }
         nurse_info:{
                 age:number, 
@@ -38,11 +41,13 @@ export interface NurseInfoIE{
 
 export interface IntersectionUsersIE{
     user:{
-        linked_card?:string
+        username:string,
+        linked_card?:string,
         first_name:string,
         last_name:string,
         role:string,
         email:string,
+        token:string,
     }
     nurse_info?:{
         age:number, 
@@ -66,7 +71,7 @@ export interface OrderIE{
     status:string,
     client:string,
     days?: []
-
+    cost_per_week:number
 }
 
 export interface ApplicationIE{

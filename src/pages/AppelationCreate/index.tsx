@@ -65,7 +65,7 @@ export const AppelationCreatePage:React.FC = () => {
                     <TextArea placeholder='Введите текст аппеляции посещения' value={text} onChange={(e)=>setText(e.target.value)}>
 
                     </TextArea>
-                   
+                   <div>*Следите за аппелцией в личном кабинете в карточке заказа</div>
                     <div className="applicationPageBtns">
                         <Button onClick={()=>onCreate()}>Создать аппеляцию</Button>
                         <Button onClick={()=>navigate(-1)} type='primary'>Отмена</Button>

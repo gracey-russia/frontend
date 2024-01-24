@@ -42,3 +42,36 @@
     align-items: center;
     justify-content: center;
 }
+
+.grace-man-def{
+    position: absolute;
+    width: 350px;
+    top: 200px;
+    left: 20px;
+}
+
+.grace-girl-def{
+    height: 450px;
+    position: absolute;
+    right: 150px;
+    bottom: 0px;
+}
+
+@media screen and (max-width: 1200px) {
+    .grace-girl-def{
+        right: 50px
+    }
+    .grace-man-def{
+        left:-10px;
+    }
+  }
+
+@media screen and (max-width: 900px) {
+    .grace-girl-def{
+        display: none;
+    }
+    .grace-man-def{
+        display: none;
+    }
+
+}

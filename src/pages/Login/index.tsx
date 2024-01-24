@@ -50,6 +50,11 @@ export const LoginPage: React.FC = () =>{
     }
     return <> 
     <div className="login-page">
+            <img className="grace-man" src='/grace_man.svg'></img>
+            <img className="plantImg" src="/plant.svg"></img>
+            <img className="clockImg" src="/clock.svg"></img>
+            
+    <div lang="ru-RU" className="logo" onClick={()=>navigate('/auth/login')}>GRAC<span  lang="ru-Ru" style={{color:'#d3e6ff'}}>EY</span></div>
         <div className="form-wrapper">
             <h2 className="h1">Вход</h2>
             <Space.Compact className="input">

@@ -26,3 +26,15 @@
 .appH2{
 margin-bottom: 0px;
 }
+
+.nurseFace{
+    width: 100px;
+}
+
+.nurseFaceWrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}

@@ -31,7 +31,7 @@ export const ApplicationPage:React.FC = () =>{
             cancelText: 'Отмена',
             onOk() {
                 axios.delete('application/'+data?.id + '/')
-                navigate(-1)
+                navigate('/customer')
                 window.location.reload()
             }
         })

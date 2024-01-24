@@ -99,18 +99,29 @@ export const SMSPage: React.FC = () =>{
         <div className="form-wrapper">
             
             <div style={{textAlign:'center'}}>
-                <h2 className="h1">Код</h2>
-                введите код из смс
+                <h2 className="h1">Введите код из СМС</h2>
+                Мы отправили сообщение <br></br> с кодом подтверждения на ваш <br></br> номер:
+                +7 ({localStorage.getItem('tel')?.slice(2,5)})-
+                {localStorage.getItem('tel')?.slice(5, 8)}-
+                {localStorage.getItem('tel')?.slice(8,10)}-
+                {localStorage.getItem('tel')?.slice(10,localStorage.getItem('tel')?.length)}
+
+
             </div>
-            <Input      inputMode="numeric"
-                        style={{width:'100%'}}
+            <Input      
+
+                        placeholder="0000"
+                        inputMode="numeric"
+                        style={{width:'100%', textAlign:'center'}}
                         maxLength={4}
                         className="inputNumber" 
                         value={code} 
                         onChange={(e)=>validateInput(e.target.value)}
                 ></Input>
-            <Button onClick={()=>onSendCodeClick()} type="primary">Подтвердить</Button>
             <Button size="small" onClick={()=>getCode()} >Отпрвить код еще раз</Button>
+            <Button size="large" onClick={()=>onSendCodeClick()} type="primary">Подтвердить</Button>
+            <div onClick={()=>navigate(-1)} style={{textAlign:'center', cursor:"pointer"}}>Назад</div>
+
 
         </div>
     </div>

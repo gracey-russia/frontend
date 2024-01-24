@@ -15,7 +15,8 @@ export const CustomerInfoPage:React.FC = () =>{
             email:'',
             first_name:'',
             last_name:'',
-            role: 'customer'
+            role: 'customer',
+            telegram_username:''
         }
     })
     const [isNew, setNew] = useState(false)
@@ -31,6 +32,7 @@ export const CustomerInfoPage:React.FC = () =>{
     }, [setUser]) 
 
     const onSave = () =>{
+       
         if(isNew){
             userApi.post('customer_info/', userData).then((r)=>{
                 if (r.status == 200){
@@ -57,7 +59,7 @@ export const CustomerInfoPage:React.FC = () =>{
     }
     return <>
     <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <h2>Данные о Вас</h2>
+        <h2>Мой профиль</h2>
         <Space>
             Имя <Input value={userData?.user.first_name} 
                     onChange={(e)=>setUser({
@@ -85,6 +87,20 @@ export const CustomerInfoPage:React.FC = () =>{
                     placeholder="Ваша фамилия"
                     ></Input>
         </Space>
+        <Space>
+            Телеграм username <Input value={userData?.user.telegram_username} 
+                    onChange={(e)=>setUser({
+                        ...userData, 
+                        user: {
+                            ...(userData.user),
+                            telegram_username:e.target.value
+                        }
+                    }
+                    )} 
+                    placeholder="@username"
+                    ></Input>
+        </Space>
+        <h6>*Телеграм нужен для уведомлений</h6>
 
         <Space>
             Почта <Input type="email" value={userData?.user.email} 
@@ -99,7 +115,7 @@ export const CustomerInfoPage:React.FC = () =>{
                     placeholder="E-mail адрес"
                     ></Input>
         </Space>
-
+        <h6>*Почта понадобиться для экстренной связи, обещаем не спамить) </h6>
         <Space>
             Регион <Select
                     options={[
@@ -118,7 +134,6 @@ export const CustomerInfoPage:React.FC = () =>{
                     ></Select>
         </Space>
         <Button type="primary" onClick={()=>onSave()}>Сохранить</Button>
-        
     </Space>
     </>
 }

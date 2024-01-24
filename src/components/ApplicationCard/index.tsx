@@ -24,15 +24,19 @@ export const ApplicationCard:React.FC<ApplicationIE> = (props) =>{
 
     return <div className='applicationCard'>
             <div className="applicationCardContent">
-                <h2 className="appH2">Заявка на сиделку</h2>    
+                <h2 className="appH2">Заявка на подбор специалиста</h2>    
+                <Tag color="#87d068">Новая</Tag>
                 <div>{props.care_type}</div>
                 <div>Способ связи: {props.contact_type}</div>
-                <Tag color="#87d068">Новая</Tag>
+                <Button type='primary' onClick={()=>navigate('application/'+props.id)}>Подробнее</Button>
             </div>
             
             <div className="applicationCardBtns">
-                <Button type='primary' onClick={()=>navigate('application/'+props.id)}>Подробнее</Button>
-                <Button onClick={()=>deleteApplication()}>Отменить</Button>
+                <div className="nurseFaceWrapper">
+                    <img className="nurseFace" src='/nurse_face.png'></img>
+                    <div style={{color:"#A9A9A9"}}>Подбор специалиста</div>
+                </div>
+                {/* <Button onClick={()=>deleteApplication()}>Отменить</Button> */}
             </div>
 
         </div>

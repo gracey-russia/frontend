@@ -203,7 +203,7 @@ export const NursePage:React.FC = () =>{
     return <>
         <Outlet/>
         <div className="customerPage">
-            <Button type='primary' onClick={()=>onGetMoney()}>Вывод денег</Button>
+            {/* <Button type='primary' onClick={()=>onGetMoney()}>Вывод денег</Button> */}
             <Tabs defaultActiveKey="0" items={menuItems} />
     </div>
     
