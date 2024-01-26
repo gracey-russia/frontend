@@ -4,6 +4,7 @@ console.log(BACKEND_URL)
 
 export let token = localStorage.getItem('token')
 
+
 export const tokenUpdate = () =>{
   token = localStorage.getItem('token')
 }
