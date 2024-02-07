@@ -80,5 +80,8 @@
     .grace-man{
         display: none;
     }
+    .plantImg{
+        height: 300px;
+    }
 
 }

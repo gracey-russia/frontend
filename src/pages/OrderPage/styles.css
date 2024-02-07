@@ -1,4 +1,4 @@
-.applicationPageBackground{
+.orderPageBackground{
     position: fixed;
     left: 0;
     top: 0;
@@ -12,8 +12,8 @@
 
 }
 
-.applicationPage{
-    background-color:#edf3ff ;
+.orderPage{
+    background-color:#ffffff ;
     padding: 35px;
     display: flex;
     flex-direction: column;
@@ -40,4 +40,22 @@
 .visitsWrapper{
     height: 200px;
     overflow-y: scroll;
+    display: flex;
+    gap:15px;
+    flex-direction: column;
+
 }
+
+
+@media screen and (max-width: 900px) {
+    .orderPageWrapper{
+        flex-wrap: wrap;
+        width: 100%;
+    }
+    .orderPageBackground{
+        overflow-y: scroll;
+        overflow-x: hidden;
+        align-items: flex-start;
+    }  
+}
+

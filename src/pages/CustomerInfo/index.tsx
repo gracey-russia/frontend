@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { userApi } from "../../lib/axios";
 import { CustomerInfoIE } from "../../types";
 import { App } from 'antd';
-
+import './styles.css'
 export const CustomerInfoPage:React.FC = () =>{
     const { message, notification, modal } = App.useApp();
     const [userData, setUser] = useState<CustomerInfoIE>({
@@ -58,7 +58,7 @@ export const CustomerInfoPage:React.FC = () =>{
         }
     }
     return <>
-    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
+    <Space className="InfoWrapper" direction="vertical" size="middle" style={{ display: 'flex' }}>
         <h2>Мой профиль</h2>
         <Space>
             Имя <Input value={userData?.user.first_name} 
@@ -115,9 +115,10 @@ export const CustomerInfoPage:React.FC = () =>{
                     placeholder="E-mail адрес"
                     ></Input>
         </Space>
-        <h6>*Почта понадобиться для экстренной связи, обещаем не спамить) </h6>
+        <h6>*Почта нужна для экстренной связи, обещаем не спамить) </h6>
         <Space>
             Регион <Select
+                    style={{ width: 200 }}
                     options={[
                         {value:'Москва'},
                         {value:'Московская область'}

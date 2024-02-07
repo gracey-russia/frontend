@@ -159,7 +159,7 @@ export const NurseInfoPage:React.FC = () =>{
                     ></Input>
         </Space> */}
         <Space>
-            Телеграм username <Input value={userData?.user.telegram_username} 
+            Telegram username <Input value={userData?.user.telegram_username} 
                     onChange={(e)=>setUser({
                         ...userData, 
                         user: {
@@ -171,7 +171,7 @@ export const NurseInfoPage:React.FC = () =>{
                     placeholder="@username"
                     ></Input>
         </Space>
-        <h6>*Телеграм нужен для уведомлений</h6>
+        <h6>*Telegram нужен для уведомлений</h6>
         <Space>
             Гражданство <Input type="email" value={userData?.nurse_info.citizenship} 
                     onChange={(e)=>setUser({

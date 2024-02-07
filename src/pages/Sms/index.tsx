@@ -118,7 +118,7 @@ export const SMSPage: React.FC = () =>{
                         value={code} 
                         onChange={(e)=>validateInput(e.target.value)}
                 ></Input>
-            <Button size="small" onClick={()=>getCode()} >Отпрвить код еще раз</Button>
+            <Button size="small" onClick={()=>getCode()} >Отправить код еще раз</Button>
             <Button size="large" onClick={()=>onSendCodeClick()} type="primary">Подтвердить</Button>
             <div onClick={()=>navigate(-1)} style={{textAlign:'center', cursor:"pointer"}}>Назад</div>
 

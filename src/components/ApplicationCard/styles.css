@@ -37,4 +37,23 @@ margin-bottom: 0px;
     gap: 10px;
     align-items: center;
     justify-content: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .applicationCard{
+        width: 350px;
+        padding: 15px;
+        font-size: 12px;
+    }
+    .nurseFace{
+        width: 70px;
+    }
+    .nurseFaceWrapper{
+        font-size: 12px;
+    }
+    
+    h2{
+        font-size: 14px;
+    }
 }

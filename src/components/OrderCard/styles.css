@@ -26,3 +26,17 @@
 .orderH2{
 margin-bottom: 0px;
 }
+
+@media screen and (max-width: 600px) {
+    .orderCard{
+        width: 350px;
+        padding: 15px;
+        font-size: 12px;
+        gap:15px
+    }
+    h2{
+        font-size: 14px;
+    }
+}
+
+

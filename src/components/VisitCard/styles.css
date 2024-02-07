@@ -26,3 +26,19 @@
 .orderH2{
 margin-bottom: 0px;
 }
+
+@media screen and (max-width: 600px) {
+    .visitCard{
+        max-width: 350px;
+        width: 100%;
+        padding: 15px;
+        font-size: 12px;
+        gap:15px
+        
+    }
+    h2{
+        font-size: 14px;
+    }
+}
+
+
