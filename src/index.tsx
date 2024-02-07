@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { MyApp } from './app/App';
-import {BrowserRouter} from 'react-router-dom';
+import {BrowserRouter, HashRouter} from 'react-router-dom';
 import 'antd/dist/reset.css';
 import { ConfigProvider, theme } from 'antd';
 
@@ -14,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <ConfigProvider theme={{
       token: {
         colorPrimary: '#2E418E',
@@ -24,7 +24,7 @@ root.render(
     }}>
             <MyApp />
       </ConfigProvider>
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );
 
