@@ -16,7 +16,7 @@ export const CustomerInfoPage:React.FC = () =>{
             first_name:'',
             last_name:'',
             role: 'customer',
-            telegram_username:''
+            telegram_username:'',
         }
     })
     const [isNew, setNew] = useState(false)
@@ -38,6 +38,7 @@ export const CustomerInfoPage:React.FC = () =>{
                 if (r.status == 200){
                     message.success('Ваши данные успешно сохранены')
                     navigate('/customer')
+                    window.location.reload()
                 }
             }).catch((r)=>{
                 if (r.response.status == 400){
@@ -51,6 +52,7 @@ export const CustomerInfoPage:React.FC = () =>{
                 if (r.status == 200){
                     message.success('Ваши данные успешно сохранены')
                     navigate('/customer')
+                    window.location.reload()
                 }
             }).catch((r)=>{
                 message.error('Введите валидные данные, произошла ошибка на сервере')

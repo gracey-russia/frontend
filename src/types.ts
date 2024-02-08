@@ -18,6 +18,7 @@ export interface CustomerInfoIE{
         role: string,
         linked_card?:string
         telegram_username:string
+        token?:string
     }
 }
 

@@ -21,6 +21,7 @@ export const DefaultPage = () =>{
         setBalance(0)
         navigate('/auth/login')
     }
+    
 
     const onChangeClick = () =>{
         navigate(user?.user.role + '/' + user?.user.role + "_form/")
@@ -42,6 +43,10 @@ export const DefaultPage = () =>{
         window.location.reload()
     }
     useEffect( () =>{
+        if (localStorage.getItem('token') == null){
+            navigate('/auth/login')
+            return
+        }
         axios.get('balance/').then((r)=>{
             setBalance(r.data.balance)
         }).catch((r)=>{

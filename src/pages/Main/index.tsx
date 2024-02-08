@@ -6,6 +6,7 @@ import { tokenUpdate, userApi } from "../../lib/axios";
 
 export const MainPage:React.FC = () =>{
     const { message, notification, modal } = App.useApp();
+    
     tokenUpdate()
     const navigate = useNavigate()
     useEffect(()=>{

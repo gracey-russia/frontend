@@ -3,7 +3,8 @@ import './styles.css'
 import {  App, Button, Tag } from 'antd';
 import { axios, userApi } from "../../lib/axios";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { RoleContext } from '../../pages/DefaultPage'
 
 
 
@@ -12,6 +13,7 @@ export const OrderCard:React.FC<OrderIE> = (props) =>{
     const navigate = useNavigate()
     let location = useLocation();
     const [customer, setCustomer] = useState<CustomerInfoIE>()
+    let role = useContext(RoleContext)
 
     useEffect(()=>{
             userApi.get('customer_info/'+props.client+'/').then((r)=>{
@@ -112,7 +114,7 @@ export const OrderCard:React.FC<OrderIE> = (props) =>{
             <div className="orderCardBtns">
                 <Button type='primary' onClick={()=>navigate('order/'+props.id)}>Подробнее</Button>
                 {
-                    props.status == 'Ожидание оплаты'? <Button  onClick={()=>paymentClick()}>Оплатить</Button>
+                    (props.status == 'Ожидание оплаты' && role == 'customer')? <Button  onClick={()=>paymentClick()}>Оплатить</Button>
                     : 
                     <></>
                 }

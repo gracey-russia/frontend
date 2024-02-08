@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import './styles.css'
 import { UserOutlined } from '@ant-design/icons';
 import { Button, Input, Space, message, App } from 'antd';
@@ -10,6 +10,14 @@ export const LoginPage: React.FC = () =>{
     const [tel, setTel] = useState('')
     const [code, setCode] = useState('7')
     const { message, notification, modal } = App.useApp();
+
+
+
+    useEffect(() =>{
+        if (localStorage.getItem('token') != null){
+            navigate('/')
+        }
+    })
 
     const onLoginClick = () => {
         if (code.length >= 1 && tel.length == 10){
