@@ -93,7 +93,7 @@ export const OrderCard:React.FC<OrderIE> = (props) =>{
 
     return <div className='orderCard'>
             <div className="orderCardContent">
-                <h2 className="orderH2">Заказ</h2>  
+                <h2 className="orderH2">Заказ #{props.order_number}</h2>  
                 <div>Тип: {props.care_type}</div>
                 <div>Адрес: {props.address}</div>
                 <div>Cиделка: {props.nurse}</div>

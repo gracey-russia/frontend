@@ -10,6 +10,9 @@ export const SMSPage: React.FC = () =>{
     const [code, setCode] = useState('')
     const { message, notification, modal } = App.useApp();
 
+
+
+
     const onSendCodeClick = () => {
         if (code.length == 4){
             
@@ -83,7 +86,6 @@ export const SMSPage: React.FC = () =>{
     const validateInput = (e:string) =>{
         let s = '0123456789'.split('')
         let flag = true
-        
         e.split('').forEach(chr => {
             if (!(chr in s)){
                 flag = false
@@ -92,7 +94,13 @@ export const SMSPage: React.FC = () =>{
 
         if (flag){
             setCode(e)
-        } 
+        }
+
+        
+    }
+
+    if (code.length == 4){
+        onSendCodeClick()
     }
     return <> 
     <div className="login-page">
@@ -109,7 +117,7 @@ export const SMSPage: React.FC = () =>{
 
             </div>
             <Input      
-
+                        onPressEnter={()=>onSendCodeClick()}
                         placeholder="0000"
                         inputMode="numeric"
                         style={{width:'100%', textAlign:'center'}}

@@ -32,6 +32,7 @@ export const DefaultPage = () =>{
         userApi.post('/set_linked_card/', {action: flag? 'add':'delete'}).then((r)=>{
             if (r.status == 200){
                 message.success('Действие с картой успешно!')
+                window.location.reload()
             }
         }).catch((r)=>{
             if (r.status != 200){
@@ -40,7 +41,6 @@ export const DefaultPage = () =>{
         })
 
         setOpenDrawer(false)
-        window.location.reload()
     }
     useEffect( () =>{
         if (localStorage.getItem('token') == null){
@@ -85,7 +85,7 @@ export const DefaultPage = () =>{
         widget.pay('auth', 
         { 
             publicId: 'pk_a2d44a7570fe7490cfe41bb85f660', 
-            description: 'Подтверждение вашей карты для выплаты (' +user?.user.username + ")" ,
+            description: 'Подтверждение вашей карты для выплаты (' +user?.user.username + "). \n\nДля привязки карты мы спишем незначительную сумму и сразу же ее вернем." ,
             amount: 10, 
             currency: 'RUB', 
             accountId: user?.user.username, 

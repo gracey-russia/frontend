@@ -157,7 +157,7 @@ export const OrderPage:React.FC = () =>{
     <div className="orderPageBackground">
         <div className="orderPage">
             <h2>Заказ на сиделку</h2>
-            <Space><h4 style={{margin:'0px'}}>ID заказа: </h4> {data?.id}</Space>
+            <Space><h4 style={{margin:'0px'}}>Номер заказа: </h4> {data?.order_number}</Space>
             <Space><h4 style={{margin:'0px'}}>Статус заказа: </h4>  {
                     role == 'nurse'?
                     <Tag color={ data?.status == 'В архиве'? "#2db7f5" : '#87d068' }>{ data?.status == 'В архиве'? "В архиве" : 'Активный'}</Tag>

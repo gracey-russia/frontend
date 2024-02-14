@@ -67,7 +67,7 @@ export const LoginPage: React.FC = () =>{
             <h2 className="h1">Вход</h2>
             <Space.Compact className="input">
                 <Input style={{ width: '27%', textAlign:'right'}} value={'+' + code} onChange={(e)=>setCode(e.target.value.slice(1))} />
-                <Input value={tel} onChange={(e)=>setTel(e.target.value)} placeholder="9123456780" maxLength={10} style={{ width: '73%' }} defaultValue="26888888" />    
+                <Input onPressEnter={()=>onLoginClick()} value={tel} onChange={(e)=>setTel(e.target.value)} placeholder="9123456780" maxLength={10} style={{ width: '73%' }} defaultValue="26888888" />    
             </Space.Compact>
             <Button onClick={()=>onLoginClick()} type="primary">Войти</Button>
             {/* <Button onClick={()=>navigate('/auth/register')}> Зарегистрироваться</Button> */}

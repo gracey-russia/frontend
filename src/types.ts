@@ -72,7 +72,8 @@ export interface OrderIE{
     status:string,
     client:string,
     days?: []
-    cost_per_week:number
+    cost_per_week:number,
+    order_number:number
 }
 
 export interface ApplicationIE{
