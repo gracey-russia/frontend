@@ -5,7 +5,7 @@ import { App } from 'antd';
 export function MyApp() {
   return (
     <App>
-      <Helmet title={'Press-release analyzer'}>
+      <Helmet title={'ЛК Грейси'}>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
       </Helmet>
       <AppRoutes />

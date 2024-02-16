@@ -102,7 +102,8 @@ export interface VisitIE{
     order: string,
     time_start:string,
     time_end:string,
-    appelations: string[]
+    appelations: string[],
+    order_in_archive?:boolean
 }
 
 export interface VisitResponseIE{

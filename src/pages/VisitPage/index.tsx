@@ -59,7 +59,7 @@ export const VisitPage:React.FC = () => {
     return <div className="applicationPageBackground">
                 <div className="applicationPage">
                     <h2>Посещение</h2>
-                    <Space><h4 style={{margin:'0px'}}>ID:</h4> {visit?.id}</Space>
+                    {/* <Space><h4 style={{margin:'0px'}}>ID:</h4> {visit?.id}</Space> */}
                     <Tag color={ visit?.completed? '#87d068':'#f50'}>{visit?.completed? 'Выполнено':'Ожидает выполнения'}</Tag>
                     <Space direction='vertical'>
                             <Space><h4 style={{margin:'0px'}}>Дата посещения:</h4> {start_visit_date.toLocaleDateString()}</Space>

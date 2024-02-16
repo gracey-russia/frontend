@@ -119,7 +119,7 @@ export const NursePage:React.FC = () =>{
         visits.active_visits.forEach((visit, index)=>{
             activeVisitItems?.push({
                 key:index.toString(),
-                label: visit.date,
+                label: new Date(Date.parse(visit?.date as string)).toLocaleDateString(),
                 children:  <div className="orderWrapper">
                     {
                         visit.visits.map((visit,index)=><VisitCard {...visit}></VisitCard>)

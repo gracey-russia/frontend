@@ -19,7 +19,6 @@ export const OrderPage:React.FC = () =>{
     const navigate = useNavigate()
     const role  = location.pathname.split('/')[1]
 
-    console.log(visits)
     
     useEffect( () =>{
         axios.get('order/'+order_id+'/').then((r)=>{
@@ -176,12 +175,22 @@ export const OrderPage:React.FC = () =>{
                     <h3>О заказе</h3>
                     <Space><h4 style={{margin:'0px'}}>Тип ухода: </h4> {data?.care_type}</Space>
                     <Space><h4 style={{margin:'0px'}}>Адрес: </h4> {data?.address}</Space>
-                    <Space><h4 style={{margin:'0px'}}>Стоимость посещения: </h4> {data?.cost} рублей</Space>
-                    <Space><h4 style={{margin:'0px'}}>Стоимость за неделю: </h4> {data?.cost_per_week} рублей</Space>
+                    
+                    {   role == 'customer'?
+                        data?.care_type == 'На несколько часов в день'?
+                        <>
+                            <Space><h4 style={{margin:'0px'}}>Стоимость посещения: </h4> {data?.cost} рублей</Space>
+                            <Space><h4 style={{margin:'0px'}}>Стоимость за неделю: </h4> {data?.cost_per_week} рублей</Space>
+                        </> 
+                        :
+                        <Space><h4 style={{margin:'0px'}}>Стоимость за неделю: </h4> {data?.cost} рублей</Space>
+                        : ''
+                    }
+                  
 
                     <Space><h4 style={{margin:'0px'}}>Комментарий: </h4> {data?.comment}</Space>
                     {
-                        data?.days == undefined? '':<h3>Дни посещений</h3>
+                        data?.days == undefined? '':<h3>График:</h3>
                     }
                     {
                         data?.days == undefined? ''
@@ -225,7 +234,7 @@ export const OrderPage:React.FC = () =>{
                                     <h3>Посещения</h3>
                                     <div className="visitsWrapper">
                                         {
-                                            visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
+                                            visits.map((visit, index)=><VisitCard {...visit} order_in_archive={data?.status == 'В архиве'}></VisitCard>)
                                         }
                                     </div>
                                 </>

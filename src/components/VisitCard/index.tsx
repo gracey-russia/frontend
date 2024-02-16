@@ -9,13 +9,12 @@ export const VisitCard:React.FC<VisitIE> = (props) =>{
     let navigate = useNavigate()
 
     let role = useContext(RoleContext)
-
     
 
     return  <div className='visitCard'>
             <div className="visitCardContent">
                 <h2 className="orderH2">Посещение</h2>    
-                <div>Дата: {props.date}</div>
+                <div>Дата: {new Date(Date.parse(props.date as string)).toLocaleDateString()}</div>
                 <div>Время: {props.time_start} - {props.time_end}</div>
                 {
                     <Tag color={ props.completed? '#87d068':'#f50'}>{props.completed? 'Выполнено':'Ожидает выполнения'}</Tag>
@@ -26,7 +25,7 @@ export const VisitCard:React.FC<VisitIE> = (props) =>{
                 <Button type='primary' onClick={()=>navigate( '/'+ role + '/visit/'+props.id)}>Подробнее</Button>
 
                 {
-                    (props.completed && role == 'customer')? 
+                    (props.completed && role == 'customer' && (props.order_in_archive != true))? 
 
                     props.appelations.length > 0? 
                     <Button onClick={()=>navigate('/customer/appelation/'+props.appelations[props.appelations.length-1])}>Посмотреть аппеляцию</Button>
