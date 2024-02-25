@@ -155,7 +155,8 @@ export const DefaultPage = () =>{
                 
                
                 {
-                    user?.user.role == 'customer'? 
+                    user?.user.role == 'customer' ? 
+                     user.user.token != ''?
                         <>
                             <div className="info-block">
                                 <LineComponent title="Способ оплаты">
@@ -175,7 +176,7 @@ export const DefaultPage = () =>{
                                     После оплаты деньги будут зарезервированы банком — исполнитель получит деньги только после совершения сделки.
                                 </div>
                             </div>
-                        </>
+                        </>:''
                     :
                             <>
                             <h3>Способы выплат</h3>

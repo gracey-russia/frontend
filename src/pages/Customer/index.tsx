@@ -68,28 +68,28 @@ export const CustomerPage:React.FC = () =>{
     }
 
     const items: TabsProps['items'] = []
-    if (applications.length > 0){
-        items.push(
-            {
-                key:'0',
-                label: 'Заявки',
-                children: <>
-                    <div className="children-wrapper">
-                        <div className="customer-greay-line"></div>
-                        <div className="customer-header-wrapper">
-                            <div className="customer-header">Заявки</div>
-                            <div  onClick={()=>navigate('application/create')} className="customer-create">Создать новую <img src='/plus.svg'/></div>
-                        </div>
-                    </div>
-                    <div className="orderWrapper">
-                    {
-                        applications.map((application)=><ApplicationCard  {...application}></ApplicationCard>)
-                    }
-                    </div>
-                </>
-            }
-        )
-    }
+    // if (applications.length > 0){
+    //     items.push(
+    //         {
+    //             key:'0',
+    //             label: 'Заявки',
+    //             children: <>
+    //                 <div className="children-wrapper">
+    //                     <div className="customer-greay-line"></div>
+    //                     <div className="customer-header-wrapper">
+    //                         <div className="customer-header">Заявки</div>
+    //                         <div  onClick={()=>navigate('application/create')} className="customer-create">Создать новую <img src='/plus.svg'/></div>
+    //                     </div>
+    //                 </div>
+    //                 <div className="orderWrapper">
+    //                 {
+    //                     applications.map((application)=><ApplicationCard  {...application}></ApplicationCard>)
+    //                 }
+    //                 </div>
+    //             </>
+    //         }
+    //     )
+    // }
 
     let archiveOrders:OrderIE[] = []
     let activeOrders:OrderIE[]  = []
@@ -101,12 +101,72 @@ export const CustomerPage:React.FC = () =>{
             activeOrders.push(order)
         }
     })
-    if (activeOrders.length > 0){
-        items.push(
-            {
-                key:'1',
-                label:'Активные заказы',
-                children: <>
+    // if (activeOrders.length > 0){
+    //     items.push(
+    //         {
+    //             key:'1',
+    //             label:'Активные заказы',
+    //             children: <>
+    //                  <div className="children-wrapper">
+    //                     <div className="customer-greay-line"></div>
+    //                     <div className="customer-header-wrapper">
+    //                         <div className="customer-header">Активные заказы</div>
+    //                         <div  onClick={()=>setOpenDrawer(true)} className="customer-create"> <img src='/folder.svg'/> Архив заказов</div>
+    //                     </div>
+    //                 </div>
+    //                 <div className="orderWrapper">{
+    //                 activeOrders.map((order)=><OrderCard {...order}></OrderCard>)
+    //                 }
+    //                 </div>
+    //             </> 
+    //         }
+    //     )
+    // }
+
+    // if (archiveOrders.length > 0){
+    //     items.push(
+    //         {
+    //             key:'2',
+    //             label:'Архив заказов',
+    //             children: <div className="orderWrapper">
+    //                     {
+    //                         archiveOrders.map((order)=><OrderCard {...order}></OrderCard>)
+    //                     }
+    //             </div>
+    //             }
+    //     )
+    // }
+
+
+    return <>
+    <Outlet/>
+    <div className="customerPage">
+        {/* <Button type='primary' onClick={()=>navigate('application/create')}>Создать новую заявку</Button> */}
+        {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange} /> */}
+                <Drawer width='500px' title="Архив заказов" placement="right" onClose={()=>setOpenDrawer(false)} open={openDrawer}>
+                    {
+                        archiveOrders.length == 0? <div>Нет заказов в архиве</div>: <div className="orderWrapper">
+                        {
+                            archiveOrders.map((order)=><OrderCard {...order}></OrderCard>)
+                        }
+                        </div>
+                    }
+                </Drawer>
+
+                    <GraceySwitch 
+                defaultActive={true}
+                item1={{
+                    label: 'Заказы',
+                    children: activeOrders.length == 0?  
+                    <div className="children-wrapper">
+                        <div className="customer-greay-line"></div>
+                        <div className="customer-header-wrapper">
+                            <div className="customer-header">Нет активных заказов</div>
+                            <div  onClick={()=>setOpenDrawer(true)} className="customer-create"> <img src='/folder.svg'/> Архив заказов</div>
+                        </div>
+                    </div>
+                    :   
+                <>
                      <div className="children-wrapper">
                         <div className="customer-greay-line"></div>
                         <div className="customer-header-wrapper">
@@ -119,54 +179,36 @@ export const CustomerPage:React.FC = () =>{
                     }
                     </div>
                 </> 
-            }
-        )
-    }
-
-    if (archiveOrders.length > 0){
-        items.push(
-            {
-                key:'2',
-                label:'Архив заказов',
-                children: <div className="orderWrapper">
-                        {
-                            archiveOrders.map((order)=><OrderCard {...order}></OrderCard>)
-                        }
-                </div>
-                }
-        )
-    }
-
-
-    console.log(items)
-    return <>
-    <Outlet/>
-    <div className="customerPage">
-        {/* <Button type='primary' onClick={()=>navigate('application/create')}>Создать новую заявку</Button> */}
-        {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange} /> */}
-        {
-            items.length != 3? <Spin/>
-            :   <>
-                <Drawer width='500px' title="Архив заказов" placement="right" onClose={()=>setOpenDrawer(false)} open={openDrawer}>
-                    {
-                        items[2].children
-                    }
-                </Drawer>
-                    <GraceySwitch 
-                item1={{
-                    label:items[0].label,
-                    children:items[0].children
                 }}
                 item2={{
-                    label:items[1].label,
-                    children:items[1].children
+                    label: 'Заявки',
+                    children: applications.length == 0? <div className="children-wrapper">
+                    <div className="customer-greay-line"></div>
+                    <div className="customer-header-wrapper">
+                        <div className="customer-header">Нет заявок</div>
+                        <div  onClick={()=>navigate('application/create')} className="customer-create">Создать новую <img src='/plus.svg'/></div>
+                    </div>
+                </div>
+                :
+                <>
+                <div className="children-wrapper">
+                    <div className="customer-greay-line"></div>
+                    <div className="customer-header-wrapper">
+                        <div className="customer-header">Заявки</div>
+                        <div  onClick={()=>navigate('application/create')} className="customer-create">Создать новую <img src='/plus.svg'/></div>
+                    </div>
+                </div>
+                <div className="orderWrapper">
+                {
+                    applications.map((application)=><ApplicationCard  {...application}></ApplicationCard>)
+                }
+                </div>
+            </>
                     
                 }} 
             >
             </GraceySwitch>
-            </>
 
-        }
         
     </div>
     </>

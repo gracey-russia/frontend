@@ -32,9 +32,11 @@ export const ApplicationPage:React.FC = () =>{
             okText:'Да',
             cancelText: 'Отмена',
             onOk() {
-                axios.delete('application/'+data?.id + '/')
-                navigate('/customer')
-                window.location.reload()
+                axios.delete('application/'+data?.id + '/').then((r)=>{
+                    navigate('/customer')
+                    window.location.reload()
+                })
+               
             }
         })
     }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import './styles.css'
 
 export interface GraceySwitchIE{
+    defaultActive?:boolean
     item1:{
         label:React.ReactNode, 
         children:React.ReactNode
@@ -14,7 +15,7 @@ export interface GraceySwitchIE{
 }
 
 export const GraceySwitch:React.FC<GraceySwitchIE> = (props) =>{
-    const [firstItem, setFirstItem] = useState(true)
+    const [firstItem, setFirstItem] = useState(props.defaultActive == undefined?  true:props.defaultActive)
 
 
     return <div className="gracey-switch">
