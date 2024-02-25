@@ -1,11 +1,11 @@
 .orderCard{
     background-color:#edf3ff ;
-    padding: 35px;
+    padding: 24px 16px;
     display: flex;
-    flex-direction: row;
-    border-radius: 15px;
+    flex-direction: column;
+    border-radius: 8px;
     gap:50px;
-    width: 600px;
+    max-width: 400px;
     justify-content: space-between;
 }
 
@@ -24,13 +24,34 @@
 }
 
 .orderH2{
-margin-bottom: 0px;
+    margin-bottom: 0px;
+    font-size: 20px;
 }
+.costWrapper{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.costText{
+    text-transform: uppercase;
+    font-size: 12px;
+    color: #828282;
+    font-weight: 600;
+}
+
+.costCost{
+    font-size: 24px;
+    font-weight: 600;
+    
+}
+
+
 
 @media screen and (max-width: 600px) {
     .orderCard{
-        width: 350px;
-        padding: 15px;
+        max-width: 400px;
         font-size: 12px;
         gap:15px
     }

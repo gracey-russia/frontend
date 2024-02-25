@@ -5,6 +5,8 @@ import { userApi } from "../../lib/axios";
 import { CustomerInfoIE } from "../../types";
 import { App } from 'antd';
 import './styles.css'
+import { GraceyButton } from "../../components/GraceyButton";
+import { LineComponent } from "../../components/LineComponent";
 export const CustomerInfoPage:React.FC = () =>{
     const { message, notification, modal } = App.useApp();
     const [userData, setUser] = useState<CustomerInfoIE>({
@@ -59,84 +61,93 @@ export const CustomerInfoPage:React.FC = () =>{
             })
         }
     }
-    return <>
-    <Space className="InfoWrapper" direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <h2>Мой профиль</h2>
-        <Space>
-            Имя <Input value={userData?.user.first_name} 
-                    onChange={(e)=>setUser({
-                        ...userData, 
-                        user: {
-                            ...(userData.user),
-                            first_name:e.target.value
+    return <div className="customer-info">
+            <div className="customer-info-header">
+                <img style={{cursor:'pointer'}} onClick={()=>navigate(-1)} src='/back.svg'></img>
+                Редактирование профиля
+            </div>
+            <div className="customer-info-card">
+                <LineComponent title="Имя">
+                         <Input className="customer-info-input" value={userData?.user.first_name} 
+                                onChange={(e)=>setUser({
+                                    ...userData, 
+                                    user: {
+                                        ...(userData.user),
+                                        first_name:e.target.value
+                                    }
+                                }
+                                )} 
+                                placeholder="Ваше имя"
+                                ></Input>
+                </LineComponent>
+                <LineComponent title="Фамилия">
+                    <Input className="customer-info-input" value={userData?.user.last_name} 
+                        onChange={(e)=>setUser({
+                            ...userData, 
+                            user: {
+                                ...(userData.user),
+                                last_name:e.target.value
+                            }
                         }
-                    }
-                    )} 
-                    placeholder="Ваше имя"
+                        )} 
+                        placeholder="Ваша фамилия"
                     ></Input>
-        </Space>
-
-        <Space>
-            Фамилия <Input value={userData?.user.last_name} 
-                    onChange={(e)=>setUser({
-                        ...userData, 
-                        user: {
-                            ...(userData.user),
-                            last_name:e.target.value
+                </LineComponent>
+                <LineComponent title='Телеграм username'>
+                    <Space.Compact style={{width:'100%'}}><Input style={{ width: '10%'}} className="customer-info-input" value='@' disabled={true} />
+                    <Input className="customer-info-input" value={userData?.user.telegram_username} 
+                         style={{ width: '100%'}}
+                        onChange={(e)=>setUser({
+                            ...userData, 
+                            user: {
+                                ...(userData.user),
+                                telegram_username:e.target.value
+                            }
                         }
-                    }
-                    )} 
-                    placeholder="Ваша фамилия"
+                        )} 
+                        placeholder="@username"
                     ></Input>
-        </Space>
-        <Space>
-            Телеграм username <Input value={userData?.user.telegram_username} 
-                    onChange={(e)=>setUser({
-                        ...userData, 
-                        user: {
-                            ...(userData.user),
-                            telegram_username:e.target.value
+                    </Space.Compact>
+                </LineComponent>         
+                <h6>*Телеграм нужен для уведомлений</h6>
+                <LineComponent title="E-mail">
+                    <Input className="customer-info-input" type="email" value={userData?.user.email} 
+                        onChange={(e)=>setUser({
+                            ...userData, 
+                            user: {
+                                ...(userData.user),
+                                email:e.target.value
+                            }
                         }
-                    }
-                    )} 
-                    placeholder="@username"
+                        )} 
+                        placeholder="E-mail адрес"
                     ></Input>
-        </Space>
-        <h6>*Телеграм нужен для уведомлений</h6>
-
-        <Space>
-            Почта <Input type="email" value={userData?.user.email} 
-                    onChange={(e)=>setUser({
-                        ...userData, 
-                        user: {
-                            ...(userData.user),
-                            email:e.target.value
+                </LineComponent>
+                <h6>*Почта нужна для экстренной связи, обещаем не спамить) </h6>
+                <LineComponent  title="Регион">
+                    <Select
+                        showSearch
+                        className="customer-info-input"
+                        style={{ width: '100%' }}
+                        options={[
+                            {value:'Москва'},
+                            {value:'Московская область'}
+                        ]}
+                        onChange={(e:any)=>setUser({
+                            ...userData, 
+                            customer_info:{
+                                ...(userData.customer_info),
+                                region: e
+                            }
                         }
-                    }
-                    )} 
-                    placeholder="E-mail адрес"
-                    ></Input>
-        </Space>
-        <h6>*Почта нужна для экстренной связи, обещаем не спамить) </h6>
-        <Space>
-            Регион <Select
-                    style={{ width: 200 }}
-                    options={[
-                        {value:'Москва'},
-                        {value:'Московская область'}
-                    ]}
-                    onChange={(e:any)=>setUser({
-                        ...userData, 
-                        customer_info:{
-                            ...(userData.customer_info),
-                            region: e
-                        }
-                    }
-                    )} 
-                    defaultValue={userData.customer_info.region}
+                        )} 
+                        defaultValue={userData.customer_info.region}
                     ></Select>
-        </Space>
-        <Button type="primary" onClick={()=>onSave()}>Сохранить</Button>
-    </Space>
-    </>
+                </LineComponent>
+            </div>
+            <div className="customer-info-btn-wrapper">
+                <GraceyButton type="primary" onClick={()=>onSave()}>Сохранить</GraceyButton>
+                <GraceyButton onClick={()=>navigate(-1)}>Отменить</GraceyButton>
+            </div>
+        </div>
 }

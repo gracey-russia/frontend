@@ -1,17 +1,45 @@
-.login-page{
+.sms-page{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     width: 100%;
     height: 100vh;
-    padding: 100px;
+    padding: 25px;
 }
 
-.input{
-    width: 180px;
+.inputNumber{
+    width: 100%;
+    max-width: 350px;
+    height: 60px;
+    font-size: 32px;
+    border: none;
+    outline: none;
+    
+    letter-spacing: 15px;
+    box-shadow: none !important;
+}
+.inputNumber::placeholder {
+    padding-left: 15px;
 }
 
+.sms-text{
+    margin-top: 25px;
+    color:#959595;
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+.sms-pic{
+    display: none
+}
+.send-code{
+    width: 100%;
+    cursor: pointer;
+    color:#2C4192;
+    text-align: center;
+    margin-bottom: 35px;
+}
 .form-wrapper{
     gap:15px;
     display: flex;
@@ -21,4 +49,30 @@
 .h1{
     width: 100%;
     text-align: center;
+}
+
+.sms-page-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap:15px;
+    align-items: center;
+    justify-content: center;
+  
+}
+
+@media screen and (min-width: 1200px) {
+    .sms-pic{
+        display: block;        
+    }
+    .sms-page-wrapper{
+        height: 100vh;
+        padding: 100px;
+        
+    }
+    .sms-page{
+        height: min-content;
+        border-radius: 20px;
+        background-color: #EDF3FF;
+        max-width: 750px;
+    }
 }

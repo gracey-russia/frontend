@@ -1,0 +1,51 @@
+.application-create{
+    margin-top: -50px;
+    display: flex;
+    flex-direction: column;
+    gap:32px;
+    align-items: center;
+    justify-content: center;
+}
+
+.application-create-block{
+    background: #F9F9F9;
+    padding: 16px;
+    border-radius: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:8px;
+    max-width: 400px;
+}
+
+
+.application-create-header{
+    display: flex;
+    flex-wrap: nowrap;
+    gap:20px;
+    justify-content: flex-start;
+    align-items: center;
+    color:#292929;
+    font-size: 24px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.ant-select-selector{
+    background: #EDF0F4 !important;
+
+}
+
+.application-input{
+    outline: none;
+    border: none;
+    background: #EDF0F4 !important;
+    width: 100%;
+
+}
+
+.application-create-btns-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap:25px;
+}

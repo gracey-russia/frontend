@@ -8,6 +8,50 @@
     cursor: pointer;
 }
 
+.info-block{
+    background: #F9F9F9;
+    padding: 16px;
+    border-radius: 16px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap:8px
+}
+.card-text-wrapper{
+    display: flex;
+    gap:15px;
+    flex-wrap: nowrap; 
+    color: #292929;
+    font-size: 16px;
+    align-items: center;
+    justify-content: space-between;
+}
+.card-grey-text{
+    font-size: 12px;
+    color:#828282;
+    width: 90%;
+}
+
+
+.change-btn{
+    width: 125px;
+    margin-top: -24px;
+}
+.info-block-wrapper{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 40px
+}
+
+.pay-card-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+    gap:20px
+}
+
 .defaultPage{
     display: flex;
     flex-direction: column;
@@ -19,7 +63,6 @@
 }
 
 .header{
-    background-color: #edf3ff;
     position: fixed;
     top:0px;
     left: 0px;
@@ -32,6 +75,8 @@
     justify-content: space-between;
     gap:25px;
     z-index: 10;
+    background-color: #fff;
+    border-radius: 0px 0px 15px 15px;
 }
 
 .btnsWrapper{
@@ -49,12 +94,38 @@
     left: 20px;
 }
 
+.connectText{
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    gap:10px;
+}
 .grace-girl-def{
     height: 450px;
     position: absolute;
     right: 150px;
     bottom: 0px;
 }
+.profile-logo{
+    transition: 0.3s;
+    cursor: pointer;
+    width: 46px;
+}
+.profile-logo:hover{
+    opacity: 0.5;
+}
+.logout-btn{
+    display: flex;
+    flex-direction: row;
+    gap:5px;
+    padding: 10px !important;
+}
+
+.defaultPageWrapper{
+    width: 100%;
+}
+
+
 
 @media screen and (max-width: 1200px) {
     .grace-girl-def{
@@ -78,17 +149,18 @@
 @media screen and (max-width: 500px) {
     .header{
         padding: 10px;
-        height: 60px;
+        height: 100px;
     }
     .logo{
-        font-size: 32px !important;
+        font-size: 54px !important;
+        line-height: 54px;
         padding: 0px !important;
     }
     .btnsWrapper{
-        gap:10px
+        gap:15px
     }
     .defaultPage{
-        padding:150px  30px 50px 30px  ;
+        padding:150px  15px 50px 15px  ;
     }
 
     /* .defaultPageWrapper{

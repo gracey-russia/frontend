@@ -1,12 +1,19 @@
 .applicationCard{
-    background-color:#edf3ff ;
-    padding: 35px;
+    background-color:#EDF3FF ;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+
+    border-radius: 15px;
+    gap:15px; 
+    max-width: 400px;
+}
+
+.applicationCardWrapper{
     display: flex;
     flex-direction: row;
-    border-radius: 15px;
-    gap:50px;
-    width: 600px;
     justify-content: space-between;
+
 }
 
 .applicationCardContent{
@@ -24,11 +31,23 @@
 }
 
 .appH2{
-margin-bottom: 0px;
+    margin-bottom: 0px;
+    font-size: 20px;
 }
 
+.appText{
+    font-size: 14px;
+    color: #959595
+}
+.textBlueApp{
+    font-size: 10px;
+    text-transform: uppercase;
+    color:#304299
+}
 .nurseFace{
     width: 100px;
+    border: solid 1px #304299;
+    border-radius: 50%;
 }
 
 .nurseFaceWrapper{
@@ -42,12 +61,12 @@ margin-bottom: 0px;
 
 @media screen and (max-width: 600px) {
     .applicationCard{
-        width: 350px;
-        padding: 15px;
+        max-width: 400px;
+        padding: 24px 16px;
         font-size: 12px;
     }
     .nurseFace{
-        width: 70px;
+        width: 90px;
     }
     .nurseFaceWrapper{
         font-size: 12px;

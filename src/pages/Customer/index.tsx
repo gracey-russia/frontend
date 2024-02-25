@@ -1,7 +1,8 @@
-import { App, Button, Tabs, TabsProps } from "antd";
+import { App, Button, Drawer, Radio, Spin, Tabs, TabsProps } from "antd";
 import React, { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { ApplicationCard } from "../../components/ApplicationCard";
+import { GraceySwitch } from "../../components/GraceySwitch";
 import { OrderCard } from "../../components/OrderCard";
 import { axios, userApi } from "../../lib/axios";
 import { ApplicationIE, CustomerInfoIE, OrderIE } from "../../types";
@@ -11,6 +12,7 @@ export const CustomerPage:React.FC = () =>{
     const [user, setUser] = useState<CustomerInfoIE>()
     const [applications, setApplications] = useState<ApplicationIE[]>([])
     const [orders, setOrders] = useState<OrderIE[]>([])
+    const [openDrawer, setOpenDrawer] = useState(false)
     const navigate = useNavigate()
     const { message, notification, modal } = App.useApp();
 
@@ -71,11 +73,20 @@ export const CustomerPage:React.FC = () =>{
             {
                 key:'0',
                 label: 'Заявки',
-                children: <div className="orderWrapper">
+                children: <>
+                    <div className="children-wrapper">
+                        <div className="customer-greay-line"></div>
+                        <div className="customer-header-wrapper">
+                            <div className="customer-header">Заявки</div>
+                            <div  onClick={()=>navigate('application/create')} className="customer-create">Создать новую <img src='/plus.svg'/></div>
+                        </div>
+                    </div>
+                    <div className="orderWrapper">
                     {
                         applications.map((application)=><ApplicationCard  {...application}></ApplicationCard>)
                     }
-                </div>
+                    </div>
+                </>
             }
         )
     }
@@ -95,10 +106,19 @@ export const CustomerPage:React.FC = () =>{
             {
                 key:'1',
                 label:'Активные заказы',
-                children:  <div className="orderWrapper">{
+                children: <>
+                     <div className="children-wrapper">
+                        <div className="customer-greay-line"></div>
+                        <div className="customer-header-wrapper">
+                            <div className="customer-header">Активные заказы</div>
+                            <div  onClick={()=>setOpenDrawer(true)} className="customer-create"> <img src='/folder.svg'/> Архив заказов</div>
+                        </div>
+                    </div>
+                    <div className="orderWrapper">{
                     activeOrders.map((order)=><OrderCard {...order}></OrderCard>)
-                }
-                </div>
+                    }
+                    </div>
+                </> 
             }
         )
     }
@@ -118,14 +138,36 @@ export const CustomerPage:React.FC = () =>{
     }
 
 
-
-
+    console.log(items)
     return <>
     <Outlet/>
     <div className="customerPage">
-        <Button type='primary' onClick={()=>navigate('application/create')}>Создать новую заявку</Button>
-        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+        {/* <Button type='primary' onClick={()=>navigate('application/create')}>Создать новую заявку</Button> */}
+        {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange} /> */}
+        {
+            items.length != 3? <Spin/>
+            :   <>
+                <Drawer width='500px' title="Архив заказов" placement="right" onClose={()=>setOpenDrawer(false)} open={openDrawer}>
+                    {
+                        items[2].children
+                    }
+                </Drawer>
+                    <GraceySwitch 
+                item1={{
+                    label:items[0].label,
+                    children:items[0].children
+                }}
+                item2={{
+                    label:items[1].label,
+                    children:items[1].children
+                    
+                }} 
+            >
+            </GraceySwitch>
+            </>
 
+        }
+        
     </div>
     </>
 }

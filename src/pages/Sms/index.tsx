@@ -4,6 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Button, Input, Space, message, InputNumber, App } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { auth, axios, tokenUpdate } from "../../lib/axios";
+import { GraceyButton } from "../../components/GraceyButton";
 
 export const SMSPage: React.FC = () =>{
     const navigate = useNavigate()
@@ -102,17 +103,22 @@ export const SMSPage: React.FC = () =>{
     if (code.length == 4){
         onSendCodeClick()
     }
-    return <> 
-    <div className="login-page">
+    return <div className="sms-page-wrapper"> 
+    <img src='/login-pic.svg' className="sms-pic"></img>      
+
+    <div className="sms-page">
         <div className="form-wrapper">
             
             <div style={{textAlign:'center'}}>
                 <h2 className="h1">Введите код из СМС</h2>
-                Мы отправили сообщение <br></br> с кодом подтверждения на ваш <br></br> номер:
-                +7 ({localStorage.getItem('tel')?.slice(2,5)})-
-                {localStorage.getItem('tel')?.slice(5, 8)}-
-                {localStorage.getItem('tel')?.slice(8,10)}-
-                {localStorage.getItem('tel')?.slice(10,localStorage.getItem('tel')?.length)}
+                <div className="sms-text">
+                    Мы отправили сообщение с кодом  <br></br> подтверждения на ваш номер:<br></br> 
+                    +7 ({localStorage.getItem('tel')?.slice(2,5)})-
+                    {localStorage.getItem('tel')?.slice(5, 8)}-
+                    {localStorage.getItem('tel')?.slice(8,10)}-
+                    {localStorage.getItem('tel')?.slice(10,localStorage.getItem('tel')?.length)}
+                </div>
+             
 
 
             </div>
@@ -126,12 +132,12 @@ export const SMSPage: React.FC = () =>{
                         value={code} 
                         onChange={(e)=>validateInput(e.target.value)}
                 ></Input>
-            <Button size="small" onClick={()=>getCode()} >Отправить код еще раз</Button>
-            <Button size="large" onClick={()=>onSendCodeClick()} type="primary">Подтвердить</Button>
-            <div onClick={()=>navigate(-1)} style={{textAlign:'center', cursor:"pointer"}}>Назад</div>
+            <div className='send-code' onClick={()=>getCode()} >Отправить код еще раз</div>
+            <GraceyButton size="large" onClick={()=>onSendCodeClick()} type="primary">Войти</GraceyButton>
+            <GraceyButton  size="large" onClick={()=>navigate(-1)} >Назад</GraceyButton>
 
 
         </div>
     </div>
-    </>
+    </div>
 }

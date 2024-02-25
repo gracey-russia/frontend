@@ -1,4 +1,12 @@
-
+*{
+  --primary-color: #304299;
+  --primary-active-color:#1A2B6D;
+  --primary-ondrag-color:#1A2B6D;
+  --secondary-color:#FFFFFF;
+  --secondary-active-color:#F3F3F4;
+  --secondary-ondrag-color:#F8F8F8;
+  --border-color:#E7E7E9;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',

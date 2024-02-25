@@ -1,11 +1,12 @@
 .visitCard{
     background-color:#edf3ff ;
-    padding: 35px;
+    padding: 16px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border-radius: 15px;
     gap:50px;
-    width: 600px;
+    width: 100%;
+    max-width: 400px;
     justify-content: space-between;
 }
 
@@ -14,8 +15,15 @@
     flex-direction: column;
     gap:5px;
     align-items: flex-start;
+    width: 100%;
 }
-
+.visit-card-header{
+    display: flex;
+    flex-direction: row;
+    gap:15px;
+    justify-content: center;
+    align-items: center;
+}
 .visitCardBtns{
     display: flex;
     flex-direction: column;
@@ -29,7 +37,6 @@ margin-bottom: 0px;
 
 @media screen and (max-width: 600px) {
     .visitCard{
-        max-width: 350px;
         width: 100%;
         padding: 15px;
         font-size: 12px;

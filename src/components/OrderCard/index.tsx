@@ -1,10 +1,12 @@
-import { ApplicationIE, CustomerInfoIE, OrderIE } from "../../types"
+import { ApplicationIE, CustomerInfoIE, OrderIE, User } from "../../types"
 import './styles.css'
 import {  App, Button, Tag } from 'antd';
 import { axios, userApi } from "../../lib/axios";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { RoleContext } from '../../pages/DefaultPage'
+import { GraceyButton } from "../GraceyButton";
+import { LineComponent } from "../LineComponent";
 
 
 
@@ -13,17 +15,28 @@ export const OrderCard:React.FC<OrderIE> = (props) =>{
     const navigate = useNavigate()
     let location = useLocation();
     const [customer, setCustomer] = useState<CustomerInfoIE>()
+    const [nurseUser, setNurse] = useState<User>()
     let role = useContext(RoleContext)
 
     useEffect(()=>{
             userApi.get('customer_info/'+props.client+'/').then((r)=>{
             setCustomer(r.data)
             }).catch((r)=>{
+                
+                if (r.status!= 200){
+                    message.error('Ошибка сервера!')
+                }
+            })
+            userApi.get('user_info/'+props.nurse+'/').then((r)=>{
+                setNurse(r.data)
+                console.log(r)
+            }).catch((r)=>{
                 if (r.status!= 200){
                     message.error('Ошибка сервера!')
                 }
             }
-     )}, [setCustomer])
+            )
+     }, [setCustomer])
 
     const paymentClick = () =>{
         let cost = 0
@@ -93,28 +106,35 @@ export const OrderCard:React.FC<OrderIE> = (props) =>{
 
     return <div className='orderCard'>
             <div className="orderCardContent">
-                <h2 className="orderH2">Заказ #{props.order_number}</h2>  
-                <div>Тип: {props.care_type}</div>
-                <div>Адрес: {props.address}</div>
-                <div>Cиделка: {props.nurse}</div>
-                <div>Cтоимость: {props.cost}</div>
-                {
-                    location.pathname.split('/')[location.pathname.split('/').length-1] == 'nurse'?
+                {   
+                    role == 'nurse'?
                     <Tag color={ props.status == 'В архиве'? "#2db7f5" : '#87d068' }>{ props.status == 'В архиве'? "В архиве" : 'Активный'}</Tag>
                     :
                     <Tag color={
                         props.status == 'Ожидание оплаты'? 
-                        '#f50': props.status == 'Активный'? 
-                        '#87d068':"#2db7f5"
+                        '#FF5100': props.status == 'Активный'? 
+                        '#68D741':"#32B4F0"
                     }>{props.status}</Tag>
                 }
+
+                <h2 className="orderH2">{props.care_type}</h2>
+                <LineComponent title="Номер заказа">#{props.order_number}</LineComponent>  
+                <LineComponent title="Адрес">{props.address}</LineComponent>  
+                <LineComponent title="Cиделка">{nurseUser?.first_name} {nurseUser?.last_name}</LineComponent>  
+                
+                
+                <div className="costWrapper">
+                    <div className="costText">Cтоимость:</div>
+                    <div className="costCost">{props.cost} ₽</div>
+                </div>
+               
                 
             </div>
             
             <div className="orderCardBtns">
-                <Button type='primary' onClick={()=>navigate('order/'+props.id)}>Подробнее</Button>
+                <GraceyButton size="large" type='primary' onClick={()=>navigate('order/'+props.id)}>Подробнее</GraceyButton>
                 {
-                    (props.status == 'Ожидание оплаты' && role == 'customer')? <Button  onClick={()=>paymentClick()}>Оплатить</Button>
+                    (props.status == 'Ожидание оплаты' && role == 'customer')? <GraceyButton size="large" onClick={()=>paymentClick()}>Оплатить</GraceyButton>
                     : 
                     <></>
                 }

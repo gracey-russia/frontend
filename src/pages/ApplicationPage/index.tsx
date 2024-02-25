@@ -1,6 +1,8 @@
 import { App, Button, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { GraceyButton } from "../../components/GraceyButton";
+import { LineComponent } from "../../components/LineComponent";
 import { axios } from "../../lib/axios";
 import { ApplicationIE } from "../../types";
 import './styles.css'
@@ -36,17 +38,21 @@ export const ApplicationPage:React.FC = () =>{
             }
         })
     }
-    return <div className="applicationPageBackground">
-        <div className="applicationPage">
-            <h2>Новая заявка</h2>
-            <div>ID заявки: {data?.id}</div>
-            <div>Вид ухода: {data?.care_type}</div>
-            <div>Когда начать: {data?.time_start}</div>
-            <div>Способ связи: {data?.contact_type}</div>
-            <Tag color="#87d068">Новая</Tag>
-            <div className="applicationPageBtns">
-                <Button onClick={()=>deleteApplication()}>Отменить заявку</Button>
-                <Button onClick={()=>navigate(-1)} type='primary'>Закрыть окно</Button>
+    return <div className="application-page-background">
+        <div className="application-page">
+            <div className="application-page-wrapper">
+                <h2 className="application-page-h2">Заявка на подбор специалиста</h2>
+                <img onClick={()=>navigate(-1)} className="application-page-cross" src='/cross.svg'/>
+            </div>
+            <Tag color="#2DC071">Новая</Tag>
+
+            <LineComponent title="ID заявки">{data?.id}</LineComponent>
+            <LineComponent title="Вид ухода">{data?.care_type}</LineComponent>
+            <LineComponent title="Когда начать">{data?.time_start}</LineComponent>
+            <LineComponent title="Способ связи">{data?.contact_type}</LineComponent>
+            <div className="application-page-btns">
+                <GraceyButton size="large" onClick={()=>deleteApplication()}>Отменить заявку</GraceyButton>
+                {/* <Button onClick={()=>navigate(-1)} type='primary'>Закрыть окно</Button> */}
             </div>
         </div>
     </div>

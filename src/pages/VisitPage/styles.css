@@ -1,4 +1,4 @@
-.applicationPageBackground{
+.visit-page-background{
     position: fixed;
     left: 0;
     top: 0;
@@ -12,14 +12,16 @@
 
 }
 
-.applicationPage{
-    background-color:#edf3ff ;
+.visit-page{
+    background-color: var(--secondary-color) ;
     padding: 35px;
     display: flex;
     flex-direction: column;
     border-radius: 15px;
     align-items: flex-start;
-    gap:15px;    
+    gap:15px; 
+    width: 90%;
+    max-width: 400px;   
 }
 .applicationPageBtns{
     display: flex;
@@ -28,3 +30,17 @@
     justify-content: center;
     width: 100%;
 }
+
+.visit-page-header{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap:15px;
+    width: 100%;
+    color:#333;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+

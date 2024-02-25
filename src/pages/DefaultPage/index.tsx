@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import './style.css'
 import { LogoutOutlined, UserOutlined} from '@ant-design/icons';
-import { App, Button, Drawer, Space, Spin } from "antd";
+import { App, Button, Drawer, Space, Spin, Switch } from "antd";
 import { Outlet, useNavigate } from 'react-router-dom';
 import { axios, userApi } from "../../lib/axios";
 import { CustomerInfoIE, IntersectionUsersIE, NurseInfoIE } from "../../types";
+import { GraceyButton } from "../../components/GraceyButton";
+import { LineComponent } from "../../components/LineComponent";
 export const RoleContext = React.createContext('customer')
 
 export const DefaultPage = () =>{
@@ -54,7 +56,7 @@ export const DefaultPage = () =>{
                 message.error('Ошибка сервера!')
             }
         })
-        userApi.get('user_info/').then((r)=>{
+        userApi.get('user_self_info/').then((r)=>{
             userApi.get(r.data.role+'_info/').then((r_user)=>{
                 setUser(r_user.data)
             }).catch((r_user)=>{
@@ -86,7 +88,7 @@ export const DefaultPage = () =>{
         { 
             publicId: 'pk_a2d44a7570fe7490cfe41bb85f660', 
             description: 'Подтверждение вашей карты для выплаты (' +user?.user.username + "). \n\nДля привязки карты мы спишем незначительную сумму и сразу же ее вернем." ,
-            amount: 10, 
+            amount: 11, 
             currency: 'RUB', 
             accountId: user?.user.username, 
             invoiceId: 'none', 
@@ -116,73 +118,101 @@ export const DefaultPage = () =>{
     }
 
     return <>
-        <Drawer title="О вас" placement="right" onClose={()=>setOpenDrawer(false)} open={openDrawer}>
-        <Space direction="vertical">
-                
-            <Space direction="vertical">
-                <h2>Мой профиль</h2>
-                <Space><h4 style={{margin:'0px'}}>ФИО: </h4>{user?.user.first_name + ' ' + user?.user.last_name}</Space>
-                {
-                    user?.user.role == 'customer'?   
-                    <Space><h4 style={{margin:'0px'}}>E-mail: </h4>{user?.user.email}</Space> : ''
+        <Drawer width='500px' title="Профиль" placement="right" onClose={()=>setOpenDrawer(false)} open={openDrawer}>
+        {
+            user == undefined? 
+                <Spin/>
+            :
+            <div className='info-block-wrapper'>
+                <div className="info-block">
+                    <LineComponent  title='ФИО'>
+                        {user?.user.first_name + ' ' + user?.user.last_name}
+                    </LineComponent>
+                    <LineComponent title="Телефон">{user?.user.username}</LineComponent>
+                    <LineComponent title="Telegram username">@{user?.user.telegram_username}</LineComponent>
 
-                }
-
-                
-                <Space><h4 style={{margin:'0px'}}>Привязка карты: </h4>{user?.user.token == '' ? 'Нет':'Да' }</Space>
-
-            </Space>
-            
-            {
-                user == undefined? <Spin/>
-                :
-                user.user.role == 'customer'? 
-                <Space direction='vertical'>
-                    <Space><h4 style={{margin:'0px'}}>Ваш регион: </h4>{user.customer_info?.region}</Space>
-                </Space>
-                :
-                <Space direction='vertical'>
-                    <Space><h4 style={{margin:'0px'}}> Возраст:</h4>{user.nurse_info?.age}</Space>
-                    <Space><h4 style={{margin:'0px'}}> Опыт работы:</h4>{user.nurse_info?.expirience}</Space>
-                    <Space><h4 style={{margin:'0px'}}> Описание:</h4>{user.nurse_info?.description}</Space>
-                </Space>
-            }
-            <Button type='primary' onClick={()=>onChangeClick()}> Изменить</Button>
-            <div></div>
-            <div></div>
-            {
-                user?.user.role == 'customer'? 
-                    <>
-                        <h3>Способ оплаты</h3>
-                        {
-                            user?.user.linked_card? <Button onClick={()=>setLinkedCard(false)}>Отказаться от автоплатежа</Button>
-                            :
-                            <Button onClick={()=>setLinkedCard(true)}>Использовать автоплатеж с карты</Button>
-                        } 
-                    </>
-                :
+                    {
+                        user?.user.role == 'customer'?
                         <>
-                        <h3>Способы выплат</h3>
-                        {
-                            user?.user.token == '' ? <Button onClick={()=>onPaymentClick()}>Подключить карту для вывода средств</Button>
-                            :
-                            <Button onClick={()=>onPaymentClick()}>Подключить другую карту для вывода средств</Button>
-                        } 
+                            <LineComponent title="E-mail">{user?.user.email}</LineComponent>
+                            <LineComponent title="Ваш регион">{user?.customer_info?.region}</LineComponent>
                         </>
-            }
-           
+                        : 
+                        <>      
+                                <LineComponent title="Возраст">{user.nurse_info?.age}</LineComponent>
+                                <LineComponent title="Опыт работы">{user.nurse_info?.expirience}</LineComponent>
+                                <LineComponent title="описание">{user.nurse_info?.description}</LineComponent>
+{/* 
+                                <Space><h4 style={{margin:'0px'}}> Возраст:</h4>{user.nurse_info?.age}</Space>
+                                <Space><h4 style={{margin:'0px'}}> Опыт работы:</h4>{user.nurse_info?.expirience}</Space>
+                                <Space><h4 style={{margin:'0px'}}> Описание:</h4>{user.nurse_info?.description}</Space> */}
+                        
+                        </>
+                    }
+                </div>
 
-            
-        </Space>
+                <GraceyButton className="change-btn" type='primary' onClick={()=>onChangeClick()}> Изменить</GraceyButton>
+                
+               
+                {
+                    user?.user.role == 'customer'? 
+                        <>
+                            <div className="info-block">
+                                <LineComponent title="Способ оплаты">
+                                    <div className="pay-card-wrapper">
+                                        <img 
+                                            src={user.user.card_type == 'Visa'? 'visa.svg': user.user.card_type == 'MasterCard'? 'masterCard.svg':'mir.svg'}
+                                        />
+                                        {user.user.card_mask}
+                                    </div>
+                                </LineComponent>
+                                <div className="card-text-wrapper">
+                                        Сохранить банковскую карту для быстрой оплаты заказов
+                                    <Switch checked={user?.user.linked_card? true:false} onChange={(checked)=>setLinkedCard(checked)} />
+                                </div>
+                                <div className="card-grey-text">
+                                    Используем систему «Безопасная сделка». 
+                                    После оплаты деньги будут зарезервированы банком — исполнитель получит деньги только после совершения сделки.
+                                </div>
+                            </div>
+                        </>
+                    :
+                            <>
+                            <h3>Способы выплат</h3>
+                            {
+                                user?.user.token == '' ? <GraceyButton onClick={()=>onPaymentClick()}>Подключить карту для вывода средств</GraceyButton>
+                                :
+                                <GraceyButton onClick={()=>onPaymentClick()}>Подключить другую карту для вывода средств</GraceyButton>
+                            } 
+                            </>
+                }
+       
+                <div>
+                    <div className="card-text-header">Чем мы можем вам помочь?</div>
+                    <div className="card-grey-text">
+                        Если у вас возникли вопросы — напишите нам любым, удобным вам способом.
+                    </div>
+                </div>
+                <div className="drawer-btn-wrapper">
+                    <a href="https://wa.me/79939110350"><GraceyButton className="WhatsAppBtn" type="primary" size="large" onClick={()=>null}>WhatsApp</GraceyButton></a>
+                    <a href='https://t.me/Graceyrus'><GraceyButton className= "TelegramBtn" type="primary" size="large" onClick={()=>null}>Telegram</GraceyButton></a>
+                </div>
+               
+            </div>
 
+
+
+        }
       </Drawer>
+
+
         <div className="defaultPage">
             <header className="header">
                 <div lang="ru-RU" className="logo" onClick={()=>navigate('/')}>GRAC<span  lang="ru-Ru" style={{color:'#d3e6ff'}}>EY</span></div>
                 <div className="btnsWrapper">
                     {/* <Space><h3 style={{margin:'0px'}}>Баланс:</h3> {balance} руб.</Space> */}
-                    <Button onClick={()=>logout()} ><LogoutOutlined /> Выйти</Button>
-                    <Button type='primary' onClick={()=>setOpenDrawer(true)}><UserOutlined /> Профиль</Button>
+                    <GraceyButton className="logout-btn" size='normal' onClick={()=>logout()} ><img src='/logout.svg'/> Выйти</GraceyButton>
+                    <img className="profile-logo" src='/profile.svg' onClick={()=>setOpenDrawer(true)}/>
                     {/* <img src='/menu.svg'></img> */}
                 </div>
             </header>
@@ -192,7 +222,6 @@ export const DefaultPage = () =>{
                 <RoleContext.Provider value={user == undefined? 'customer':user?.user.role}>
                     <Outlet/>
                 </RoleContext.Provider>
-
             </div>
         </div>
     </>

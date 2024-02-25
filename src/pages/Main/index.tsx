@@ -10,7 +10,7 @@ export const MainPage:React.FC = () =>{
     tokenUpdate()
     const navigate = useNavigate()
     useEffect(()=>{
-        userApi.get('user_info/').then((r)=>{
+        userApi.get('user_self_info/').then((r)=>{
             if (r.data.role == 'customer'){
                 navigate('/customer')
             }else if(r.data.role == 'nurse'){

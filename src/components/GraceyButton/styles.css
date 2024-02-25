@@ -1,0 +1,51 @@
+.GraceButton{
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    max-width: 400px;
+    transition: 0.3s;
+}
+
+.primary{
+    background-color: var(--primary-color);
+    color: #fff
+}
+
+.primary:hover{
+    background-color: var(--primary-ondrag-color);
+}
+.primary:active{
+    background-color: var(--primary-active-color);
+
+}
+
+
+.secondary{
+    background-color: var(--secondary-color);
+    color:#575D68;
+    border:solid 1px #BDBDBD;
+}
+
+.secondary:hover{
+    background-color: var(--secondary-ondrag-color);
+}
+.secondary:active{
+    background-color: var(--secondary-active-color);
+
+}
+
+.large{
+    padding: 18px 32px;
+    font-size: 20px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.normal{
+
+}

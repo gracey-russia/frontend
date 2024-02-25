@@ -20,6 +20,8 @@
     border-radius: 15px;
     align-items: flex-start;
     gap:15px;
+    width: 90%;
+    flex-wrap: wrap;
 }
 .applicationPageBtns{
     display: flex;
@@ -34,22 +36,60 @@
     display: flex;
     gap:50px;
     justify-content:  space-between;
-
 }
 
 .visitsWrapper{
-    height: 200px;
+    height: 300px;
     overflow-y: scroll;
     display: flex;
     gap:15px;
     flex-direction: column;
+    max-width: 400px;
+    width:100%;
+
 
 }
+.order-page-header{
+    display: flex;
+    flex-direction: row;
+    font-size: 24px;
+    font-weight: 600;
+    gap: 25px
+}
 
+.order-header{
+    font-size: 24px;
+    font-weight: 600;
+    gap: 25px
+}
+.order-block{
+    background-color: #F9F9F9;
+    padding: 16px;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 400px;
+}
+
+.order-page-wrapper{
+    display: flex;
+    flex-direction: row;
+    gap:25px;
+    flex-wrap: wrap;
+}
+.order-classic-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap:16px;
+    width: 100%;
+    max-width: 400px;
+}
 
 @media screen and (max-width: 900px) {
     .orderPageWrapper{
         flex-wrap: wrap;
+        width: 100%;
+    }
+    .orderPage{
         width: 100%;
     }
     .orderPageBackground{

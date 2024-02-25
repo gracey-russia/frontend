@@ -44,6 +44,9 @@ export interface IntersectionUsersIE{
     user:{
         username:string,
         linked_card?:string,
+        card_type?:string, 
+        card_mask?:string,
+        telegram_username?:string,
         first_name:string,
         last_name:string,
         role:string,

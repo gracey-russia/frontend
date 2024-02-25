@@ -4,6 +4,7 @@ import { UserOutlined } from '@ant-design/icons';
 import { Button, Input, Space, message, App } from 'antd';
 import { useNavigate } from "react-router-dom";
 import { auth, axios } from "../../lib/axios";
+import { GraceyButton } from "../../components/GraceyButton";
 
 export const LoginPage: React.FC = () =>{
     const navigate = useNavigate()
@@ -56,22 +57,23 @@ export const LoginPage: React.FC = () =>{
         }
 
     }
-    return <> 
-    <div className="login-page">
-            <img className="grace-man" src='/grace_man.svg'></img>
-            <img className="plantImg" src="/plant.svg"></img>
-            <img className="clockImg" src="/clock.svg"></img>
-            
-    <div lang="ru-RU" className="logo" onClick={()=>navigate('/auth/login')}>GRAC<span  lang="ru-Ru" style={{color:'#d3e6ff'}}>EY</span></div>
-        <div className="form-wrapper">
-            <h2 className="h1">Вход</h2>
-            <Space.Compact className="input">
-                <Input style={{ width: '27%', textAlign:'right'}} value={'+' + code} onChange={(e)=>setCode(e.target.value.slice(1))} />
-                <Input onPressEnter={()=>onLoginClick()} value={tel} onChange={(e)=>setTel(e.target.value)} placeholder="9123456780" maxLength={10} style={{ width: '73%' }} defaultValue="26888888" />    
-            </Space.Compact>
-            <Button onClick={()=>onLoginClick()} type="primary">Войти</Button>
-            {/* <Button onClick={()=>navigate('/auth/register')}> Зарегистрироваться</Button> */}
+    return <div className="login-page-wrapper"> 
+        <img src='/login-pic.svg' className="login-pic"></img>      
+        <div className="login-page">
+                {/* <img className="grace-man" src='/grace_man.svg'></img>
+                <img className="plantImg" src="/plant.svg"></img>
+                <img className="clockImg" src="/clock.svg"></img> */}
+            <a  href='https://gracey.ru' lang="ru-RU" className="login-logo" >GRAC<span  lang="ru-Ru" style={{color:'#d3e6ff'}}>EY</span></a>
+            <div className="form-wrapper">
+                    <h2 className="h1">Добро пожаловать!</h2>
+                    <div className="login-text">Введите ваш номер телефона для входа</div>
+                    <Space.Compact className="login-input">
+                        <Input style={{ width: '17%', textAlign:'center', fontSize:'16px'}} value={'+' + code} onChange={(e)=>setCode(e.target.value.slice(1))} />
+                        <Input onPressEnter={()=>onLoginClick()} value={tel} onChange={(e)=>setTel(e.target.value)} placeholder="Номер телефона" maxLength={10} style={{maxWidth:'350px', width: '83%', fontSize:'16px'}} defaultValue="26888888" />    
+                    </Space.Compact>
+                    <GraceyButton size="large" onClick={()=>onLoginClick()} type="primary">Войти</GraceyButton>
+                    {/* <Button onClick={()=>navigate('/auth/register')}> Зарегистрироваться</Button> */}
+            </div>
         </div>
     </div>
-    </>
 }

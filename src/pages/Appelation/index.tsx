@@ -1,6 +1,8 @@
 import { App, Button, Input, Space, Tag } from 'antd'
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import { GraceyButton } from '../../components/GraceyButton'
+import { LineComponent } from '../../components/LineComponent'
 import { axios } from '../../lib/axios'
 import { AppelationIE, VisitIE } from '../../types'
 import './styles.css'
@@ -30,38 +32,36 @@ export const AppelationPage:React.FC = () => {
     
 
     let navigate = useNavigate()
-    return <div className="applicationPageBackground">
-                <div className="applicationPage">
-                    <h2>Аппеляция</h2>
-                    <Space><h4 style={{margin:'0px'}}>Cтатус аппеляции:</h4>
-                     <Tag color={
-                        appelation?.status == 'На рассмотрени'? 
-                        '#f50':  appelation?.status == 'Новая'? 
-                        '#87d068':"#2db7f5"
-                    }>{ appelation?.status}</Tag>
-                        
-                    </Space>
-
-                    <Space><h4 style={{margin:'0px'}}>ID аппеляции:</h4> {appelation_id}</Space>
-                    <Space><h4 style={{margin:'0px'}}>ID визита:</h4> {appelation?.visit}</Space>
+    return <div className="appelation-page-background">
+                <div className="appelation-page">
+                    <div className='appelation-page-header'>
+                        Аппеляция
+                        <img onClick={()=>navigate(-1)} style={{cursor:'pointer'}} src='/cross.svg' />
+                    </div>
                     
+                    <Tag color={
+                                appelation?.status == 'На рассмотрени'? 
+                                '#f50':  appelation?.status == 'Новая'? 
+                                '#87d068':"#2db7f5"
+                            }>{ appelation?.status}
+                    </Tag>
+                    <LineComponent title='ID Аппеляции'>{appelation_id}</LineComponent>
+                    <LineComponent title='ID Визита'>{appelation?.visit}</LineComponent>
 
-
-                    <h3>Ваше сообщение</h3>
-                    {
-                        appelation?.comment
-                    }
+                    <LineComponent title='Ваше сообщение'>
+                        {appelation?.comment}
+                    </LineComponent>
+                   
                     {
                        (appelation?.status == 'Новая' || appelation?.status == 'На рассмотрении')? "":
                        <>
-                       <h3>Ответ менеджера</h3>
-                       {
-                        appelation?.ans
-                       }
+                        <LineComponent title='Ответ менеджера'>
+                            {appelation?.ans}
+                        </LineComponent>
                        </>
                     }
-                    <div className="applicationPageBtns">
-                        <Button onClick={()=>navigate(-1)} type='primary'>Закрыть окно</Button>
+                    <div className="appelation-page-btns">
+                        <GraceyButton onClick={()=>navigate(-1)}>Закрыть окно</GraceyButton>
                     </div>
                 </div>
             </div>

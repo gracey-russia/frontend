@@ -5,6 +5,8 @@ import { axios } from '../../lib/axios'
 import { VisitIE } from '../../types'
 import './styles.css'
 import { RoleContext } from '../../pages/DefaultPage'
+import { GraceyButton } from '../../components/GraceyButton'
+import { LineComponent } from '../../components/LineComponent'
 
 const { TextArea } = Input;
 
@@ -56,33 +58,35 @@ export const VisitPage:React.FC = () => {
     }
 
     let navigate = useNavigate()
-    return <div className="applicationPageBackground">
-                <div className="applicationPage">
-                    <h2>Посещение</h2>
-                    {/* <Space><h4 style={{margin:'0px'}}>ID:</h4> {visit?.id}</Space> */}
-                    <Tag color={ visit?.completed? '#87d068':'#f50'}>{visit?.completed? 'Выполнено':'Ожидает выполнения'}</Tag>
-                    <Space direction='vertical'>
-                            <Space><h4 style={{margin:'0px'}}>Дата посещения:</h4> {start_visit_date.toLocaleDateString()}</Space>
-                            <Space><h4 style={{margin:'0px'}}>Время посещения:</h4> {visit?.time_start}-{visit?.time_end}</Space>
-                            <Space><h4 style={{margin:'0px'}}>Cоздано в системе:</h4>{create_date.toLocaleString()}</Space>
-                            {
-                                visit?.completed? <Space><h4 style={{margin:'0px'}}>Заверешено:</h4>{completed_date.toLocaleString()}</Space> : ''
-
-                            }
-                            {
-                                (visit?.nursecomment == undefined || visit?.nursecomment.length < 1)? 
-                                ''
-                                :
-                                <Space><h4 style={{margin:'0px'}}>Комментарий исполнителя:</h4>{visit.nursecomment}</Space>
-                            }
-                    </Space>
-                    <Button onClick={()=>navigate('/' + role + '/order/' + visit?.order)}>Перейти к заказу </Button>
-                    {
-                        (visit?.completed == false && role == 'nurse' && now_date > start_visit_date)? <Button onClick={()=>onCompleteClick()} type='primary'>Отметить выполненным</Button> : ''
-                    }
-                    <div className="applicationPageBtns">
-                        <Button onClick={()=>navigate(-1)} type='primary'>Закрыть окно</Button>
+    return <div className="visit-page-background">
+                <div className="visit-page">
+                    <div className='visit-page-header'>
+                        Посещение
+                        <img onClick={()=>navigate(-1)} src='/cross.svg'/>
                     </div>
+                    {/* <Space><h4 style={{margin:'0px'}}>ID:</h4> {visit?.id}</Space> */}
+                    <Tag color={ visit?.completed? '#2C4192':'#f50'}>{visit?.completed? 'Выполнено':'Ожидает выполнения'}</Tag>
+                    <LineComponent title='Дата посещения'>{start_visit_date.toLocaleDateString()}</LineComponent>
+                    <LineComponent title='Время посещения'>{visit?.time_start}-{visit?.time_end}</LineComponent>
+                    <LineComponent title='Создано в системе'>{create_date.toLocaleString()}</LineComponent>
+
+                    {
+                        visit?.completed? <LineComponent title='Завершено'>{completed_date.toLocaleString()}</LineComponent>  : ''
+
+                    }
+                    {
+                        (visit?.nursecomment == undefined || visit?.nursecomment.length < 1)? 
+                        ''
+                        :
+                        <LineComponent title='Kомментарий исполнителя'>{visit.nursecomment}</LineComponent>
+                    }
+                    <GraceyButton size='normal' onClick={()=>navigate('/' + role + '/order/' + visit?.order)}>Перейти к заказу </GraceyButton>
+                    {
+                        (visit?.completed == false && role == 'nurse' && now_date > start_visit_date)? <GraceyButton onClick={()=>onCompleteClick()} type='primary'>Отметить выполненным</GraceyButton> : ''
+                    }
+                    {/* <div className="applicationPageBtns">
+                        <Button onClick={()=>navigate(-1)} type='primary'>Закрыть окно</Button>
+                    </div> */}
                 </div>
             </div>
 }

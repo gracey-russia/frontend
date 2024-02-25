@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { axios, userApi } from "../../lib/axios";
 import { ApplicationIE, ApplicationCreateIE, CustomerInfoIE } from "../../types";
 import { App } from 'antd';
-
+import { LineComponent } from "../../components/LineComponent";
+import { GraceyButton } from "../../components/GraceyButton";
+import './styles.css'
 const {TextArea} = Input
 
 export const ApplicationCreate:React.FC = () =>{
@@ -32,11 +34,15 @@ export const ApplicationCreate:React.FC = () =>{
         }
         )
     }
-    return <>
-    <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
-        <h2>Новая заявка на сиделку</h2>
-        <Space>
-            Вид ухода <Select value={appData?.care_type} 
+    return <div className="application-create">
+    <div className="application-create-header">
+        <img src='/back.svg' style={{cursor:'pointer'}} onClick={()=>navigate(-1)} />
+        Новая заявка
+    </div>
+    
+    <div className="application-create-block">
+        <LineComponent title="Вид ухода">
+            <Select className="application-input" value={appData?.care_type} 
                         options={[
                             {value:'На несколько часов в день'},
                             {value:'C проживанием'}
@@ -46,24 +52,23 @@ export const ApplicationCreate:React.FC = () =>{
                             care_type: e
                         }
                         )} 
-                    ></Select>
-        </Space>
-        <Space>
-        Когда сиделка должна приступить к работе? <Select value={appData?.time_start} 
-                        options={[
-                            {value:'Как можно скорее'},
-                            {value:'3-5 дней'},
-                            {value:'Через 5 дней и более'}
-                        ]}
-                        onChange={(e)=>setAppData({
-                            ...appData, 
-                            time_start: e
-                            })}
-                    ></Select>
-        </Space>
-
-        <Space>
-            Как с вами связаться <Select value={appData?.contact_type} 
+            ></Select>
+        </LineComponent>
+        <LineComponent title='Когда сиделка должна приступить к работе?'>
+            <Select className="application-input" value={appData?.time_start} 
+                options={[
+                    {value:'Как можно скорее'},
+                    {value:'3-5 дней'},
+                    {value:'Через 5 дней и более'}
+                ]}
+                onChange={(e)=>setAppData({
+                    ...appData, 
+                    time_start: e
+                    })}
+            ></Select>
+        </LineComponent>
+        <LineComponent title='Как с вами связаться?'>
+            <Select className="application-input" value={appData?.contact_type} 
                         options={[
                             {value:'Позвоните мне'},
                             {value:'WhatsApp'},
@@ -75,15 +80,13 @@ export const ApplicationCreate:React.FC = () =>{
                         }
                         )} 
                     ></Select>
-        </Space>
-
-
-        <Space>
-            <Button type="primary" onClick={()=>onEnter()}>Отправить</Button>
-            <Button onClick={()=>navigate(-1)}>Назад</Button>
-        </Space>
-        
-
-    </Space>
-    </>
+        </LineComponent>
+    </div>
+    <div className="application-create-btns-wrapper">
+        <GraceyButton size="large" type="primary" onClick={()=>onEnter()}>Отправить</GraceyButton>
+        {/* <GraceyButton  onClick={()=>navigate(-1)}>Отменить</GraceyButton> */}
+    </div>
+ 
+    
+    </div>
 }

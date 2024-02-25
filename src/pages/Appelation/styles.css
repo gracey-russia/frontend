@@ -1,4 +1,4 @@
-.applicationPageBackground{
+.appelation-page-background{
     position: fixed;
     left: 0;
     top: 0;
@@ -12,7 +12,7 @@
 
 }
 
-.applicationPage{
+.appelation-page{
     background-color:#ffffff ;
     padding: 35px;
     display: flex;
@@ -21,10 +21,21 @@
     align-items: flex-start;
     gap:15px;    
 }
-.applicationPageBtns{
+.appelation-page-btns{
     display: flex;
     gap:25px;
     align-items: center;
     justify-content: center;
+    width: 100%;
+}
+
+.appelation-page-header{
+    color:#333333;
+    font-size: 24px;
+    display: flex;
+    flex-direction: row;
+    gap:15px;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
 }

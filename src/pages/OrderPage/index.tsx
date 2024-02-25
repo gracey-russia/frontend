@@ -1,6 +1,8 @@
 import { App, Button, Space, Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { GraceyButton } from "../../components/GraceyButton";
+import { LineComponent } from "../../components/LineComponent";
 import { VisitCard } from "../../components/VisitCard";
 import { axios, userApi } from "../../lib/axios";
 import { ApplicationIE, CustomerInfoIE, NurseInfoIE, OrderIE, VisitIE } from "../../types";
@@ -107,7 +109,7 @@ export const OrderPage:React.FC = () =>{
                     },
                     onComplete: function (paymentResult:any, options:any) { 
                     }
-                }
+                    }
                 )
             }
         }).catch((r)=>{
@@ -116,10 +118,7 @@ export const OrderPage:React.FC = () =>{
             }else if (r.status != 200){
                 message.error('Ошибка сервера!')
             }
-        })
-
-        
-       
+        }) 
     }
 
 
@@ -155,9 +154,11 @@ export const OrderPage:React.FC = () =>{
     return <>
     <div className="orderPageBackground">
         <div className="orderPage">
-            <h2>Заказ на сиделку</h2>
-            <Space><h4 style={{margin:'0px'}}>Номер заказа: </h4> {data?.order_number}</Space>
-            <Space><h4 style={{margin:'0px'}}>Статус заказа: </h4>  {
+            <div className="order-page-header">
+                <img style={{cursor:'pointer'}} onClick={()=>navigate(-1)} src='/back.svg' />
+                <div>Заказ на сиделку</div>
+            </div>
+            {
                     role == 'nurse'?
                     <Tag color={ data?.status == 'В архиве'? "#2db7f5" : '#87d068' }>{ data?.status == 'В архиве'? "В архиве" : 'Активный'}</Tag>
                     :
@@ -166,102 +167,94 @@ export const OrderPage:React.FC = () =>{
                         '#f50': data?.status == 'Активный'? 
                         '#87d068':"#2db7f5"
                     }>{data?.status}</Tag>
-                }</Space>
-
-            
-
-            <div className="orderPageWrapper">
-                <Space direction="vertical">
-                    <h3>О заказе</h3>
-                    <Space><h4 style={{margin:'0px'}}>Тип ухода: </h4> {data?.care_type}</Space>
-                    <Space><h4 style={{margin:'0px'}}>Адрес: </h4> {data?.address}</Space>
-                    
-                    {   role == 'customer'?
-                        data?.care_type == 'На несколько часов в день'?
-                        <>
-                            <Space><h4 style={{margin:'0px'}}>Стоимость посещения: </h4> {data?.cost} рублей</Space>
-                            <Space><h4 style={{margin:'0px'}}>Стоимость за неделю: </h4> {data?.cost_per_week} рублей</Space>
-                        </> 
-                        :
-                        <Space><h4 style={{margin:'0px'}}>Стоимость за неделю: </h4> {data?.cost} рублей</Space>
-                        : ''
-                    }
-                  
-
-                    <Space><h4 style={{margin:'0px'}}>Комментарий: </h4> {data?.comment}</Space>
-                    {
-                        data?.days == undefined? '':<h3>График:</h3>
-                    }
-                    {
-                        data?.days == undefined? ''
-                        :
-                        data?.days.map((el, index)=>
-                            <Space><h4 style={{margin:'0px'}}>{el[0]}</h4> {el[1]} - {el[2]}</Space>
-                        )
-                    }
-                </Space>
-                    {
-                        role == 'nurse'?  <Space direction="vertical">
-                                <h3>О клиенте</h3>
-                                <Space><h4 style={{margin:'0px'}}>Имя: </h4> {customer?.user.first_name + ' ' + customer?.user.last_name}</Space>
-                                <Space><h4 style={{margin:'0px'}}>Телефон: </h4> {data?.client}</Space>
-                                <Space><h4 style={{margin:'0px'}}>E-mail: </h4> {customer?.user.email} </Space>
-                                <Space><h4 style={{margin:'0px'}}>Регион: </h4> {customer?.customer_info.region}</Space>
-                                {
-                                    data?.care_type == 'C проживанием'? "": <>
-                                        <h3>Посещения</h3>
-                                        <div className="visitsWrapper">
-                                            {
-                                                visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
-                                            }
-                                        </div>
-                                    </>
-                                }
-                               
-                               
-                        </Space>
-                        :
-                        <Space direction="vertical">
-                            <h3>О Cиделке</h3>
-                            <Space><h4 style={{margin:'0px'}}>Имя: </h4> {nurse?.user.first_name + ' ' + nurse?.user.last_name}</Space>
-                            <Space><h4 style={{margin:'0px'}}>Телефон: </h4> {data?.nurse}</Space>
-                            <Space><h4 style={{margin:'0px'}}>Возраст: </h4> {nurse?.nurse_info.age} лет/года</Space>
-                            <Space><h4 style={{margin:'0px'}}>Опыт работы: </h4> {nurse?.nurse_info.expirience}</Space>
-                            <Space><h4 style={{margin:'0px'}}>Гражданство: </h4> {nurse?.nurse_info.citizenship}</Space>
-                            <Space><h4 style={{margin:'0px'}}>Описание: </h4> {nurse?.nurse_info.description}</Space>
-                            {
-                                data?.care_type == 'C проживанием'? "": <>
-                                    <h3>Посещения</h3>
-                                    <div className="visitsWrapper">
-                                        {
-                                            visits.map((visit, index)=><VisitCard {...visit} order_in_archive={data?.status == 'В архиве'}></VisitCard>)
-                                        }
-                                    </div>
-                                </>
-                            }
-                            
-                        
-                        </Space>
-                    }
-                  
-
-             
+            }
+            <div className="order-page-wrapper">
+    
+            <div className="order-block">
+                <LineComponent title="Номер заказа">#{data?.order_number}</LineComponent>
+                <LineComponent title="Вид ухода">{data?.care_type}</LineComponent>
+                <LineComponent title="Адрес">{data?.address}</LineComponent>
             </div>
-            
+
+            {   role == 'customer'?
+                        data?.care_type == 'На несколько часов в день'?
+                        <div className="order-block">
+                                <LineComponent title="Стоимость посещения">{data?.cost} рублей</LineComponent>
+                                <LineComponent title="Стоимость за неделю">{data?.cost_per_week} рублей</LineComponent>
+
+                        </div>
+                        :
+                        <div className="order-block">
+                            <LineComponent title="Стоимость за неделю">{data?.cost} рублей</LineComponent>
+                        </div>
+                        : ''
+            }
+            <div className="order-block">
+                <LineComponent title='Комментарий'>{data?.comment}</LineComponent>
+            </div>
+            {
+                data?.days == undefined? '': data?.days.length == 0? '':
+                <div className="order-block">
+                    <LineComponent title='График'>
+                        {
+                            data?.days.map((el, index)=>
+                                <LineComponent title={el[0]}> {el[1]} - {el[2]}</LineComponent>
+                            )
+                        }
+                    </LineComponent>
+                </div>
+
+            }
+
+            {   
+                role == 'nurse'? <div className="order-classic-wrapper">
+                        <div className="order-header">О клиенте</div>
+                        <div className="order-block">
+                            <LineComponent title="ФИО">{customer?.user.first_name + ' ' + customer?.user.last_name}</LineComponent>
+                            <LineComponent title="Телефон">{data?.client}</LineComponent>
+                            <LineComponent title="Регион">{customer?.customer_info.region}</LineComponent>
+                        </div>
+                </div>
+                :
+                <div  className="order-classic-wrapper">
+                    <div className="order-header">О Сиделке</div>
+                    <div className="order-block">
+                        <LineComponent title="ФИО">{nurse?.user.first_name + ' ' + nurse?.user.last_name}</LineComponent>
+                        <LineComponent title="Возраст">{nurse?.nurse_info.age} лет/года</LineComponent>
+                        <LineComponent title="Опыт работы">{nurse?.nurse_info.expirience} лет/года</LineComponent>
+                        <LineComponent title="Описание">{nurse?.nurse_info.description}</LineComponent>
+
+                    </div>
+                </div>
+            }    
+            {
+                            data?.care_type == 'C проживанием'? "": <div className="order-classic-wrapper">
+                                <div className="order-header">Посещения</div>
+                                <div className="visitsWrapper">
+                                    {
+                                        visits.map((visit, index)=><VisitCard {...visit}></VisitCard>)
+                                    }
+                                </div>
+                            </div>
+            }        
+           
+           
             <div className="applicationPageBtns">
                 {
                     data?.status == 'Ожидание оплаты' &&  role == 'customer'? 
-                    <Button onClick={()=>onPaymentClick()} size="large" type="primary">Оплатить заказ</Button> 
+                    <GraceyButton onClick={()=>onPaymentClick()} size="large" type="primary">Оплатить заказ</GraceyButton> 
                     :''
                 }
                 {
                     data?.status != 'В архиве'  &&  role == 'customer' ?
-                    <Button onClick={()=>moveToArchive()}>Отказаться от заказа</Button>:''
+                    <GraceyButton size="large" onClick={()=>moveToArchive()}>Отказаться от заказа</GraceyButton>:''
 
                 }
-                <Button onClick={()=>navigate(-1)} >Закрыть окно</Button>
+                {/* <GraceyButton size="large" onClick={()=>navigate(-1)} >Закрыть окно</GraceyButton> */}
             </div>
         </div>
+        </div>
+
     </div>
     </>
 }

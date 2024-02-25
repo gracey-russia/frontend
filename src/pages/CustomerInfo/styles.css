@@ -1,3 +1,73 @@
-.InfoWrapper{
-    min-width: 300px !important;
+.customer-info{
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-top: -50px;
+}
+.customer-info-header{
+    display: flex;
+    flex-wrap: nowrap;
+    gap:20px;
+    justify-content: flex-start;
+    align-items: center;
+    color:#292929;
+    font-size: 24px;
+    font-weight: 600;
+    width: 100%;
+}
+
+.customer-info-card{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding:16px;
+    background: #F9F9F9;
+    border-radius: 16px;
+    gap:15px;
+    max-width: 500px;
+}
+
+.customer-info-input{
+    outline: none;
+    border: none;
+    background: #EDF0F4 !important;
+    width: 100%;
+
+}
+
+.ant-select-selector{
+    background: #EDF0F4 !important;
+
+}
+
+.customer-info-btn-wrapper{
+    display:  flex;
+    flex-direction: row;
+    gap:50px;
+    max-width: 500px;
+    width: 100%;
+    align-items: center;
+}
+
+.drawer-btn-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap:16px
+}
+.WhatsAppBtn{
+    background-color: #28B246 !important;
+}
+
+.TelegramBtn{
+    background-color: #2889E2 !important;
+}
+
+.card-text-header{
+    font-size: 18px;
+    color:#292929;
+    font-weight: 600;
+    margin-bottom: 8px;
 }
