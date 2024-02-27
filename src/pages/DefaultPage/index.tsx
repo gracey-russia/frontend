@@ -34,7 +34,6 @@ export const DefaultPage = () =>{
         userApi.post('/set_linked_card/', {action: flag? 'add':'delete'}).then((r)=>{
             if (r.status == 200){
                 message.success('Действие с картой успешно!')
-                window.location.reload()
             }
         }).catch((r)=>{
             if (r.status != 200){
