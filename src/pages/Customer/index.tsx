@@ -11,9 +11,18 @@ import './style.css'
 export const CustomerPage:React.FC = () =>{
     const [user, setUser] = useState<CustomerInfoIE>()
     const [applications, setApplications] = useState<ApplicationIE[]>([])
-    const [orders, setOrders] = useState<OrderIE[]>([])
+    const [switchState, setSwitchState] = useState(true)
+
+
+    const [orders, setOrders] = useState<{
+        archiveOrders:OrderIE[],
+        activeOrders:OrderIE[],
+    }>({
+        archiveOrders:[],
+        activeOrders:[],
+    })
+
     const [openDrawer, setOpenDrawer] = useState(false)
-    const [defaultSwitchActive, setDefaultSwitchActive] = useState(true)
     const navigate = useNavigate()
     const { message, notification, modal } = App.useApp();
 
@@ -23,7 +32,6 @@ export const CustomerPage:React.FC = () =>{
 
 
     useEffect( () =>{
-        
         userApi.get('customer_info/').then((r)=>{
             setUser(r.data)
         }).catch((r_)=>{
@@ -53,7 +61,23 @@ export const CustomerPage:React.FC = () =>{
 
     useEffect( () =>{
         axios.get('order/').then((r)=>{
-            setOrders(r.data as any)
+            let archiveOrders:OrderIE[] = []
+            let activeOrders:OrderIE[]  = []
+        
+            r.data.map((order:OrderIE)=>{
+                if (order.status == 'В архиве'){
+                     archiveOrders.push(order)
+                } else{
+                    activeOrders.push(order)
+                }
+            })
+            if (activeOrders.length == 0){
+                setSwitchState(false)
+            }
+            setOrders({
+                archiveOrders:archiveOrders, 
+                activeOrders:activeOrders
+            })
         }).catch((r)=>{
             if (r.status != 200){
                 message.error('Ошибка сервера!')
@@ -92,16 +116,7 @@ export const CustomerPage:React.FC = () =>{
     //     )
     // }
 
-    let archiveOrders:OrderIE[] = []
-    let activeOrders:OrderIE[]  = []
-
-    orders.map((order)=>{
-        if (order.status == 'В архиве'){
-             archiveOrders.push(order)
-        } else{
-            activeOrders.push(order)
-        }
-    })
+ 
     // if (activeOrders.length > 0){
     //     items.push(
     //         {
@@ -146,19 +161,20 @@ export const CustomerPage:React.FC = () =>{
         {/* <Tabs defaultActiveKey="1" items={items} onChange={onChange} /> */}
                 <Drawer width='500px' title="Архив заказов" placement="right" onClose={()=>setOpenDrawer(false)} open={openDrawer}>
                     {
-                        archiveOrders.length == 0? <div>Нет заказов в архиве</div>: <div className="orderWrapper">
+                        orders.archiveOrders.length == 0? <div>Нет заказов в архиве</div>: <div className="orderWrapper">
                         {
-                            archiveOrders.map((order)=><OrderCard {...order}></OrderCard>)
+                            orders.archiveOrders.map((order)=><OrderCard {...order}></OrderCard>)
                         }
                         </div>
                     }
                 </Drawer>
 
                 <GraceySwitch 
-                defaultActive={defaultSwitchActive}
+                value={switchState}
+                onChange={(value)=>setSwitchState(value)}
                 item1={{
                     label: 'Заказы',
-                    children: activeOrders.length == 0?  
+                    children: orders.activeOrders.length == 0?  
                     <div className="children-wrapper">
                         <div className="customer-greay-line"></div>
                         <div className="customer-header-wrapper">
@@ -176,7 +192,7 @@ export const CustomerPage:React.FC = () =>{
                         </div>
                     </div>
                     <div className="orderWrapper">{
-                    activeOrders.map((order)=><OrderCard {...order}></OrderCard>)
+                    orders.activeOrders.map((order)=><OrderCard {...order}></OrderCard>)
                     }
                     </div>
                 </> 
