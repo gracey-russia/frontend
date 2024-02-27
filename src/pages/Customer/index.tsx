@@ -13,6 +13,7 @@ export const CustomerPage:React.FC = () =>{
     const [applications, setApplications] = useState<ApplicationIE[]>([])
     const [orders, setOrders] = useState<OrderIE[]>([])
     const [openDrawer, setOpenDrawer] = useState(false)
+    const [defaultSwitchActive, setDefaultSwitchActive] = useState(true)
     const navigate = useNavigate()
     const { message, notification, modal } = App.useApp();
 
@@ -153,8 +154,8 @@ export const CustomerPage:React.FC = () =>{
                     }
                 </Drawer>
 
-                    <GraceySwitch 
-                defaultActive={true}
+                <GraceySwitch 
+                defaultActive={defaultSwitchActive}
                 item1={{
                     label: 'Заказы',
                     children: activeOrders.length == 0?  

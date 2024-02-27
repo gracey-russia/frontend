@@ -17,7 +17,7 @@ export const MainPage:React.FC = () =>{
                 navigate('/nurse')
             }
         }).catch(()=>{
-            message.error('Ошибка сервера!')
+            // message.error('Ошибка сервера!')
         })
     })
     

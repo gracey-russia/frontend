@@ -42,6 +42,7 @@ export const NurseInfoPage:React.FC = () =>{
                 if (r.status == 200){
                     message.success('Ваши данные успешно сохранены')
                     navigate('/nurse')
+                    window.location.reload()
                 }
             }).catch((r)=>{
                 if (r.response.status == 400){
@@ -55,6 +56,7 @@ export const NurseInfoPage:React.FC = () =>{
                 if (r.status == 200){
                     message.success('Ваши данные успешно сохранены')
                     navigate('/nurse')
+                    window.location.reload()
                 }
             }).catch((r)=>{
                 message.error('Введите валидные данные, произошла ошибка на сервере')

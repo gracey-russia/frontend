@@ -53,7 +53,7 @@ export const DefaultPage = () =>{
             setBalance(r.data.balance)
         }).catch((r)=>{
             if (r.status != 200){
-                message.error('Ошибка сервера!')
+                // message.error('Ошибка сервера!')
             }
         })
         userApi.get('user_self_info/').then((r)=>{
@@ -64,13 +64,13 @@ export const DefaultPage = () =>{
                 if (r_user.response.status == 404){
                     navigate(r.data.role + '/' + r.data.role + "_form/")
                 } else if (r_user.response.status != 200){
-                    message.error('Ошибка сервера!')
+                    // message.error('Ошибка сервера!')
                 }
             })
 
         }).catch((r)=>{
             if (r.status != 200){
-                message.error('Ошибка сервера!')
+                // message.error('Ошибка сервера!')
             }
         }
         )
@@ -98,6 +98,15 @@ export const DefaultPage = () =>{
             data: {
                 isNurse : 'True'
             },
+            payer: { 
+                firstName: user?.user.first_name,
+                lastName:  user?.user.last_name,
+                middleName: 'middlename',
+                address: 'None',
+                city: 'Moscow',
+                country: 'RU',
+                phone: user?.user.username,
+            }
             
         },
         {

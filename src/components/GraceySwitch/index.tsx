@@ -15,7 +15,7 @@ export interface GraceySwitchIE{
 }
 
 export const GraceySwitch:React.FC<GraceySwitchIE> = (props) =>{
-    const [firstItem, setFirstItem] = useState(props.defaultActive == undefined?  true:props.defaultActive)
+    const [firstItem, setFirstItem] = useState(props.defaultActive)
 
 
     return <div className="gracey-switch">
