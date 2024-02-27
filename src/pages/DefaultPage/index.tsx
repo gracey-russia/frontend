@@ -16,6 +16,7 @@ export const DefaultPage = () =>{
     const { message, notification, modal } = App.useApp();
     const [balance, setBalance] = useState(0)
 
+    const [checkedSwitchCard, setCheckedSwitchCard] = useState(false)
 
     const logout = () =>{
         localStorage.clear()
@@ -31,17 +32,19 @@ export const DefaultPage = () =>{
     }
 
     const setLinkedCard = (flag:boolean) =>{
-        userApi.post('/set_linked_card/', {action: flag? 'add':'delete'}).then((r)=>{
-            if (r.status == 200){
-                message.success('Действие с картой успешно!')
-            }
-        }).catch((r)=>{
-            if (r.status != 200){
-                message.error('Ошибка сервера!')
-            }
-        })
+            userApi.post('/set_linked_card/', {action: flag? 'add':'delete'}).then((r)=>{
+                if (r.status == 200){
+                    message.success('Действие с картой успешно! ')
+                    setCheckedSwitchCard(flag)
+                }
+            }).catch((r)=>{
+                if (r.status != 200){
+                    message.error('Ошибка сервера!')
+                }
+            })
+        
 
-        setOpenDrawer(false)
+        // setOpenDrawer(false)
     }
     useEffect( () =>{
         if (localStorage.getItem('token') == null){
@@ -57,6 +60,7 @@ export const DefaultPage = () =>{
         })
         userApi.get('user_self_info/').then((r)=>{
             userApi.get(r.data.role+'_info/').then((r_user)=>{
+                setCheckedSwitchCard(r_user.data.user.linked_card? true:false)
                 setUser(r_user.data)
             }).catch((r_user)=>{
                 console.log(r_user)
@@ -177,7 +181,7 @@ export const DefaultPage = () =>{
                                 </LineComponent>
                                 <div className="card-text-wrapper">
                                         Сохранить банковскую карту для быстрой оплаты заказов
-                                    <Switch checked={user?.user.linked_card? true:false} onChange={(checked)=>setLinkedCard(checked)} />
+                                    <Switch checked={checkedSwitchCard} onChange={(checked)=>setLinkedCard(checked)} />
                                 </div>
                                 <div className="card-grey-text">
                                     Используем систему «Безопасная сделка». 
