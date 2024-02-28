@@ -155,20 +155,22 @@ export const NursePage:React.FC = () =>{
 
     const menuItems:TabsProps['items'] = [
         {
-            key:'0',
-            label:'Заказы',
-            children:      <Tabs defaultActiveKey="1" items={items} />
-
-        },
-        {
             key:'1',
             label:'Посещения',
             children: <div className="orderWrapper">
                 <Tabs defaultActiveKey="1" items={visitItems} />
             </div>
-        }
+        },
+        {
+            key:'2',
+            label:'Заказы',
+            children:      <Tabs defaultActiveKey="1" items={items} />
+
+        },
+       
         
     ]
+
     const onGetMoney = () =>{
         let summ = 0
         modal.confirm({
@@ -204,7 +206,7 @@ export const NursePage:React.FC = () =>{
         <Outlet/>
         <div className="customerPage">
             {/* <Button type='primary' onClick={()=>onGetMoney()}>Вывод денег</Button> */}
-            <Tabs defaultActiveKey="0" items={menuItems} />
+            <Tabs defaultActiveKey="1" items={menuItems} />
     </div>
     
     </>
