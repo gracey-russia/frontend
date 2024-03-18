@@ -131,7 +131,7 @@ export const NursePage:React.FC = () =>{
             {
                 key:'0',
                 label:'Активные посещения',
-                children:      <Tabs defaultActiveKey="0" items={activeVisitItems} />
+                children:      <Tabs style={{overflowX: 'scroll'}} className='tabsActiveVisitItems' defaultActiveKey="0" items={activeVisitItems} />
     
             },
         )
@@ -171,37 +171,36 @@ export const NursePage:React.FC = () =>{
         
     ]
 
-    const onGetMoney = () =>{
-        let summ = 0
-        modal.confirm({
-            title:'Вывод денег',
-            content:<div>
-                <Space>
-                    <h4 style={{margin:'0px'}}>Сумма вывода:</h4>
-                    <InputNumber min={0} max={balance} onChange={(e)=>summ=e as number} />               
-                </Space>
-            </div>,
-            okText:'Вывести',
-            cancelText: 'Отмена',
-            onOk() {
-                axios.post('balance/', {
-                    sum:summ
-                }).then((r)=>{
-                    if (r.status == 200){
-                        message.success(r.data.message)
-                        window.location.reload()
+    // const onGetMoney = () =>{
+    //     let summ = 0
+    //     modal.confirm({
+    //         title:'Вывод денег',
+    //         content:<div>
+    //             <Space>
+    //                 <h4 style={{margin:'0px'}}>Сумма вывода:</h4>
+    //                 <InputNumber min={0} max={balance} onChange={(e)=>summ=e as number} />               
+    //             </Space>
+    //         </div>,
+    //         okText:'Вывести',
+    //         cancelText: 'Отмена',
+    //         onOk() {
+    //             axios.post('balance/', {
+    //                 sum:summ
+    //             }).then((r)=>{
+    //                 if (r.status == 200){
+    //                     message.success(r.data.message)
+    //                     window.location.reload()
 
-                    }
-                }).catch((r)=>{
-                    if (r.response.status != 200){
-                        message.error(r.response.data.message)
-                    }
-                })  
-            }
-        })
+    //                 }
+    //             }).catch((r)=>{
+    //                 if (r.response.status != 200){
+    //                     message.error(r.response.data.message)
+    //                 }
+    //             })  
+    //         }
+    //     })
+    // }
 
-       
-    }
     return <>
         <Outlet/>
         <div className="customerPage">

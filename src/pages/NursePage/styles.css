@@ -1,0 +1,5 @@
+.tabsActiveVisitItems{
+    max-width: 90vw;
+    overflow-x: scroll;
+    min-width: 250px;
+}
