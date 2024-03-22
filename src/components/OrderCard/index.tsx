@@ -122,11 +122,13 @@ export const OrderCard:React.FC<OrderIE> = (props) =>{
                 <LineComponent title="Адрес">{props.address}</LineComponent>  
                 <LineComponent title="Cиделка">{nurseUser?.first_name} {nurseUser?.last_name}</LineComponent>  
                 
-                
-                <div className="costWrapper">
+                {
+                    role == 'customer'?  <div className="costWrapper">
                     <div className="costText">Cтоимость:</div>
                     <div className="costCost">{props.cost} ₽</div>
-                </div>
+                </div> : ''
+                }
+               
                
                 
             </div>
