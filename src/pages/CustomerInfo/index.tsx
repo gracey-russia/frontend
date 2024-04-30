@@ -1,4 +1,4 @@
-import { Button, Input, message, Select, Space } from "antd";
+import { Button, Checkbox, Input, message, Select, Space } from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userApi } from "../../lib/axios";
@@ -22,44 +22,51 @@ export const CustomerInfoPage:React.FC = () =>{
         }
     })
     const [isNew, setNew] = useState(false)
+    const [acceptRules, setAcceptRules] = useState(false)
     const navigate = useNavigate()
 
     useEffect( () =>{
         userApi.get('customer_info/').then((r)=>{
             setUser(r.data as CustomerInfoIE)
+            setAcceptRules(true)
         }).catch((r)=>{
             setNew(true)
+            setAcceptRules(false)
             console.log('ERR, пользователь не найден')
         })
     }, [setUser]) 
 
     const onSave = () =>{
-       
-        if(isNew){
-            userApi.post('customer_info/', userData).then((r)=>{
-                if (r.status == 200){
-                    message.success('Ваши данные успешно сохранены')
-                    navigate('/customer')
-                    window.location.reload()
-                }
-            }).catch((r)=>{
-                if (r.response.status == 400){
-                    message.error('Неверный формат почты')
-                } else{
-                    message.error('Ошибка сервера, попробуйте позже')
-                }
-            })
-        }else{
-            userApi.put('customer_info/', userData).then((r)=>{
-                if (r.status == 200){
-                    message.success('Ваши данные успешно сохранены')
-                    navigate('/customer')
-                    window.location.reload()
-                }
-            }).catch((r)=>{
-                message.error('Введите валидные данные, произошла ошибка на сервере')
-            })
+        if (acceptRules){
+            if(isNew){
+                userApi.post('customer_info/', userData).then((r)=>{
+                    if (r.status == 200){
+                        message.success('Ваши данные успешно сохранены')
+                        navigate('/customer')
+                        window.location.reload()
+                    }
+                }).catch((r)=>{
+                    if (r.response.status == 400){
+                        message.error('Неверный формат почты')
+                    } else{
+                        message.error('Ошибка сервера, попробуйте позже')
+                    }
+                })
+            }else{
+                userApi.put('customer_info/', userData).then((r)=>{
+                    if (r.status == 200){
+                        message.success('Ваши данные успешно сохранены')
+                        navigate('/customer')
+                        window.location.reload()
+                    }
+                }).catch((r)=>{
+                    message.error('Введите валидные данные, произошла ошибка на сервере')
+                })
+            }
+        } else{
+            message.warning('Подтвердите правила пользования')
         }
+       
     }
     return <div className="customer-info">
             <div className="customer-info-header">
@@ -144,6 +151,7 @@ export const CustomerInfoPage:React.FC = () =>{
                         defaultValue={userData.customer_info.region}
                     ></Select>
                 </LineComponent>
+                <Checkbox checked={acceptRules} onChange={()=>setAcceptRules(!acceptRules)}><a href='https://gracey.ru/policy'>Подвердить правила пользования</a></Checkbox>
             </div>
             <div className="customer-info-btn-wrapper">
                 <GraceyButton type="primary" onClick={()=>onSave()}>Сохранить</GraceyButton>
