@@ -72,6 +72,7 @@ export const LoginPage: React.FC = () =>{
                         <Input onPressEnter={()=>onLoginClick()} value={tel} onChange={(e)=>setTel(e.target.value)} placeholder="Номер телефона" maxLength={10} style={{maxWidth:'350px', width: '83%', fontSize:'16px'}} defaultValue="26888888" />    
                     </Space.Compact>
                     <GraceyButton size="large" onClick={()=>onLoginClick()} type="primary">Войти</GraceyButton>
+                    <div  className="login-text agree-text">Нажимая Войти, вы даете согласие на <a target="_blank"  href='https://gracey.ru/policy'>обработку  персональных данных</a></div>
                     {/* <Button onClick={()=>navigate('/auth/register')}> Зарегистрироваться</Button> */}
             </div>
         </div>

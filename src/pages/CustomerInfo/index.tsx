@@ -151,7 +151,7 @@ export const CustomerInfoPage:React.FC = () =>{
                         defaultValue={userData.customer_info.region}
                     ></Select>
                 </LineComponent>
-                <Checkbox checked={acceptRules} onChange={()=>setAcceptRules(!acceptRules)}><a href='https://gracey.ru/policy'>Подвердить правила пользования</a></Checkbox>
+                <Checkbox checked={acceptRules} onChange={()=>setAcceptRules(!acceptRules)}>Ознакомлен с<a href='https://gracey.ru/agree'> правилами сервиса</a></Checkbox>
             </div>
             <div className="customer-info-btn-wrapper">
                 <GraceyButton type="primary" onClick={()=>onSave()}>Сохранить</GraceyButton>

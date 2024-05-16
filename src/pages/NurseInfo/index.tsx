@@ -1,4 +1,4 @@
-import { Button, Input, message, Select, Space, App, InputNumber } from "antd";
+import { Button, Input, message, Select, Space, App, InputNumber, Checkbox} from "antd";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { userApi } from "../../lib/axios";
@@ -7,6 +7,8 @@ import { NurseInfoIE } from "../../types";
 const {TextArea} = Input
 export const NurseInfoPage:React.FC = () =>{
     const { message, notification, modal } = App.useApp();
+    const [acceptRules, setAcceptRules] = useState(false)
+
     const [userData, setUser] = useState<NurseInfoIE>({
         nurse_info:{
             age:0, 
@@ -29,38 +31,44 @@ export const NurseInfoPage:React.FC = () =>{
     useEffect( () =>{
         userApi.get('nurse_info/').then((r)=>{
             setUser(r.data as NurseInfoIE)
+            setAcceptRules(true)
         }).catch((r)=>{
             setNew(true)
+            setAcceptRules(false)
             console.log('ERR, пользователь не найден')
         })
     }, [setUser]) 
 
     const onSave = () =>{
         console.log(userData)
-        if(isNew){
-            userApi.post('nurse_info/', userData).then((r)=>{
-                if (r.status == 200){
-                    message.success('Ваши данные успешно сохранены')
-                    navigate('/nurse')
-                    window.location.reload()
-                }
-            }).catch((r)=>{
-                if (r.response.status == 400){
-                    message.error('Неверный формат почты')
-                } else{
-                    message.error('Ошибка сервера, попробуйте позже')
-                }
-            })
+        if (acceptRules){
+            if(isNew){
+                userApi.post('nurse_info/', userData).then((r)=>{
+                    if (r.status == 200){
+                        message.success('Ваши данные успешно сохранены')
+                        navigate('/nurse')
+                        window.location.reload()
+                    }
+                }).catch((r)=>{
+                    if (r.response.status == 400){
+                        message.error('Неверный формат почты')
+                    } else{
+                        message.error('Ошибка сервера, попробуйте позже')
+                    }
+                })
+            }else{
+                userApi.put('nurse_info/', userData).then((r)=>{
+                    if (r.status == 200){
+                        message.success('Ваши данные успешно сохранены')
+                        navigate('/nurse')
+                        window.location.reload()
+                    }
+                }).catch((r)=>{
+                    message.error('Введите валидные данные, произошла ошибка на сервере')
+                })
+            }
         }else{
-            userApi.put('nurse_info/', userData).then((r)=>{
-                if (r.status == 200){
-                    message.success('Ваши данные успешно сохранены')
-                    navigate('/nurse')
-                    window.location.reload()
-                }
-            }).catch((r)=>{
-                message.error('Введите валидные данные, произошла ошибка на сервере')
-            })
+            message.warning('Подтвердите правила пользования')
         }
     }
     
@@ -215,7 +223,8 @@ export const NurseInfoPage:React.FC = () =>{
                     placeholder="Расскажите о себе"
                     ></TextArea>
         </Space>
-        
+        <Checkbox checked={acceptRules} onChange={()=>setAcceptRules(!acceptRules)}>Ознакомлен с<a href='https://gracey.ru/agree'> правилами сервиса</a></Checkbox>
+
         {/* <Button onClick={()=>onPaymentClick()}>Подтвердить карту для выплат</Button> */}
        
         <Button type="primary" onClick={()=>onSave()}>Сохранить</Button>
